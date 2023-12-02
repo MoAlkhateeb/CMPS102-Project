@@ -140,9 +140,23 @@ ActionType Input::GetUserAction() const
 	}
 	else	//Application is in Simulation mode
 	{
+		if (y >= 0 && y < UI.ToolBarHeight)
+		{
+			//Check whick Menu item was clicked
+			//This assumes that menu items are lined up horizontally
+			int ClickedItem = (x / UI.MenuItemWidth);
+			//Divide x coord of the point clicked by the menu item width (int division)
+			//if division result is 0 ==> first item is clicked, if 1 ==> 2nd item and so on
+			switch (ClickedItem)
+			{
+				case ITM_VALIDATE: return  VALIDATE_FLOWCHART;
+				case ITM_RUN: return RUN_SIM;
+				case ITM_DESIGN_MODE: return SWITCH_DSN_MODE;
+				default: return SIM_TOOL;
+			}
+		}
 
-		// TODO: This should be changed after creating the compelete simulation bar 
-		return SWITCH_DSN_MODE;	// THIS SHOULD BE CHANGED
+		return STATUS;
 	}
 
 }

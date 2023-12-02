@@ -41,11 +41,14 @@ enum ActionType // The actions supported
 
 
 	//TODO: ADD THE ACTIONS OF SIMULATION MODE
+	VALIDATE_FLOWCHART, 
+	RUN_SIM,
 
 
 	DRAWING_AREA,  //A click on the drawing area
 	OUTPUT_AREA,   //A click on the output area
 	DSN_TOOL,	   //A click on an empty place in the design tool bar
+	SIM_TOOL,
 	STATUS 		   //A click on the status bar
 };
 

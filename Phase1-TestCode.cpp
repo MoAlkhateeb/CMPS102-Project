@@ -275,15 +275,33 @@ int main()
 
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
+	
+	Point start, end;
+	pOut->PrintMessage("Click the start point.");
+	pIn->GetPointClicked(start);
+
+	pOut->PrintMessage("Click the end point.");
+	pIn->GetPointClicked(end);
+	pOut->DrawConnector(start, end, false);
+
+	pOut->PrintMessage("Click the start point.");
+	pIn->GetPointClicked(start);	//Wait for any click
+
+	pOut->PrintMessage("Click the end point.");
+	pIn->GetPointClicked(end);	//Wait for any click
+	pOut->DrawConnector(start, end, true);
+
+	pIn->GetPointClicked(P);	//Wait for any click
+	pOut->ClearDrawArea();
 
 	/// 2.8- Draw String TEST
-	//Drawing a String in a specific location
-	pOut->PrintMessage("Drawing A String, Click to continue");
 	
+	pOut->PrintMessage("Enter a string and then click to continue");
 	text = pIn->GetString(pOut);
 	pOut->DrawString(100, 200, text);
 
-	pIn->GetPointClicked(P);
+	//Drawing a String in a specific location
+	pOut->PrintMessage("String Drawn.");
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
 
@@ -335,44 +353,85 @@ int main()
 
 		switch (ActType)
 		{
-			case ADD_VALUE_ASSIGN:
-				pOut->PrintMessage("Action: add value assignment statement , Click anywhere");
-				break;
-
-			case ADD_CONDITION:
-				pOut->PrintMessage("Action: add conditional statement , Click anywhere");
-				break;
-
-			case ADD_CONNECTOR:
-				pOut->PrintMessage("Action: add a connector , Click anywhere");
-				break;
-
-			case SELECT:
-				pOut->PrintMessage("Action: select action, Click anywhere");
-				break;
-
-			
-			case STATUS:
-				pOut->PrintMessage("Action: a click on the Status Bar, Click anywhere");
-				break;
- 
-			case DSN_TOOL:
-				pOut->PrintMessage("Action: a click on the Design Tool Bar, Click anywhere");
-				break;
-
-			case SWITCH_SIM_MODE:
-				pOut->PrintMessage("Action: Switch to Simulation Mode, creating simualtion tool bar");
-				pOut->CreateSimulationToolBar(); // THIS TESTS Output::CreateSimulationToolBar() function //////
-				break;
-
-			case SWITCH_DSN_MODE:
-				pOut->PrintMessage("Action: Switch to Design Mode, creating Design tool bar");
-				pOut->CreateDesignToolBar();
-				break;
-
-
-			case EXIT:				
-				break;
+		case ADD_START:
+			pOut->PrintMessage("Action: ADD_START");
+			break;
+		case ADD_END:
+			pOut->PrintMessage("Action: ADD_END");
+			break;
+		case ADD_VALUE_ASSIGN:
+			pOut->PrintMessage("Action: ADD_VALUE_ASSIGN");
+			break;
+		case ADD_VAR_ASSIGN:
+			pOut->PrintMessage("Action: ADD_VAR_ASSIGN");
+			break;
+		case ADD_OPER_ASSIGN:
+			pOut->PrintMessage("Action: ADD_OPER_ASSIGN");
+			break;
+		case ADD_CONDITION:
+			pOut->PrintMessage("Action: ADD_CONDITION");
+			break;
+		case ADD_READ:
+			pOut->PrintMessage("Action: ADD_READ");
+			break;
+		case ADD_WRITE:
+			pOut->PrintMessage("Action: ADD_WRITE");
+			break;
+		case ADD_CONNECTOR:
+			pOut->PrintMessage("Action: ADD_CONNECTOR");
+			break;
+		case SELECT:
+			pOut->PrintMessage("Action: SELECT");
+			break;
+		case EDIT_STAT:
+			pOut->PrintMessage("Action: EDIT_STAT");
+			break;
+		case DEL:
+			pOut->PrintMessage("Action: DEL");
+			break;
+		case COPY:
+			pOut->PrintMessage("Action: COPY");
+			break;
+		case CUT:
+			pOut->PrintMessage("Action: CUT");
+			break;
+		case PASTE:
+			pOut->PrintMessage("Action: PASTE");
+			break;
+		case SAVE:
+			pOut->PrintMessage("Action: SAVE");
+			break;
+		case LOAD:
+			pOut->PrintMessage("Action: LOAD");
+			break;
+		case SWITCH_DSN_MODE:
+			pOut->PrintMessage("Action: SWITCH_DSN_MODE");
+			pOut->CreateDesignToolBar();
+			break;
+		case SWITCH_SIM_MODE:
+			pOut->PrintMessage("Action: SWITCH_SIM_MODE");
+			pOut->CreateSimulationToolBar();
+			break;
+		case VALIDATE_FLOWCHART:
+			pOut->PrintMessage("Action: VALIDATE_FLOWCHART");
+			break;
+		case RUN_SIM:
+			pOut->PrintMessage("Action: RUN_SIM");
+			break;
+		case DRAWING_AREA:
+			pOut->PrintMessage("Action: DRAWING_AREA");
+			break;
+		case OUTPUT_AREA:
+			pOut->PrintMessage("Action: OUTPUT_AREA");
+			break;
+		case DSN_TOOL:
+			pOut->PrintMessage("Action: DSN_TOOL");
+			break;
+		case STATUS:
+			pOut->PrintMessage("Action: STATUS");
+			break;
+		case EXIT:
+			break;
 		}
 	}while(ActType != EXIT);
 

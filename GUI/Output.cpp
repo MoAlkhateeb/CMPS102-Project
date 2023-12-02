@@ -8,7 +8,7 @@ Output::Output()
 	UI.width = 1200;
 	UI.height = 620;
 	UI.wx = 15;
-	UI.wy =15;
+	UI.wy = 15;
 
 	UI.AppMode = DESIGN;	//Design Mode is the default mode
 
