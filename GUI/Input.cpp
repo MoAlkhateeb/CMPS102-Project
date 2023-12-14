@@ -32,7 +32,6 @@ string Input::GetString(Output *pO) const
 	}
 }
 
-
 double Input::GetValue(Output* pO) const {
 	// Reads a double value from the user 
 	
@@ -44,10 +43,7 @@ double Input::GetValue(Output* pO) const {
 		text = GetString(pO);
 	} while (!IsValue(text));
 
-	// argument is valid through IsValue
-	// not handling the std::out_of_range exception
 	D = stod(text);
-
 	return D;
 }
 
@@ -65,6 +61,7 @@ string Input::GetVariable(Output* pO) const {
 }
 
 string Input::GetArithOperator(Output* pO) const {
+	// Reads an arithmetic operator from the user (+, -, /, *)
 	string text;
 
 	do {
@@ -77,6 +74,7 @@ string Input::GetArithOperator(Output* pO) const {
 }
 
 string Input::GetCompOperator(Output* pO) const {
+	// Reads a comparision operator from the user (==, !=, >, <, >=, <=)
 	string text;
 
 	do {
@@ -110,6 +108,10 @@ ActionType Input::GetUserAction() const
 			case ITM_LOAD: return LOAD;
 			case ITM_SAVE: return SAVE;
 			case ITM_SELECT: return SELECT;
+			case ITM_EDIT: return EDIT_STAT;
+			case ITM_COPY: return COPY;
+			case ITM_CUT: return CUT;
+			case ITM_PASTE: return PASTE;
 			case ITM_DELETE: return DEL;
 			case ITM_START: return ADD_START;
 			case ITM_END: return ADD_END;
@@ -154,6 +156,14 @@ ActionType Input::GetUserAction() const
 				case ITM_DESIGN_MODE: return SWITCH_DSN_MODE;
 				default: return SIM_TOOL;
 			}
+		}
+		//[2] User clicks on the drawing area
+		if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+		{
+			if (x <= UI.DrawingAreaWidth)
+				return DRAWING_AREA;
+			else
+				return OUTPUT_AREA;
 		}
 
 		return STATUS;

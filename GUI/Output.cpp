@@ -14,7 +14,7 @@ Output::Output()
 
 	UI.StatusBarHeight = 50;
 	UI.ToolBarHeight = 50;
-	UI.MenuItemWidth = 80;
+	UI.MenuItemWidth = 63;
 	UI.DrawingAreaWidth = 0.75 * UI.width;
 
 	UI.DrawColor = BLUE;
@@ -23,6 +23,23 @@ Output::Output()
 
 	UI.ASSGN_WDTH = 150;
 	UI.ASSGN_HI = 50;
+
+	// all the following statement width and heights will match the assignment statement's width & height.
+
+	UI.CONDITION_WDTH = 150;
+    UI.CONDITION_HI = 50;
+
+	UI.READ_WDTH = 150;
+	UI.READ_HI = 50;
+
+	UI.WRITE_WDTH = 150;
+	UI.WRITE_HI = 50;
+
+	UI.START_WDTH = 150;
+	UI.START_HI = 50;
+
+	UI.END_WDTH = 150;
+	UI.END_HI = 50;
 
 	//Create the output window
 	pWind = CreateWind(UI.width, UI.height, UI.wx, UI.wy);
@@ -58,29 +75,21 @@ void Output::CreateStatusBar()
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 //TODO: Complete this function
-#include <iostream>
+
 void Output::CreateDesignToolBar() //Draws the Design Menu
 {
 	ClearToolBar();
 	UI.AppMode = DESIGN;	//Design Mode
-	
-	//fill the tool bar 
-		
-	//You can draw the tool bar icons in any way you want.
-	//Below is one possible way
-	
-	//First prepare List of images for each menu item
-	//To control the order of these images in the menu, 
-	//reoder them in Defs.h ==> enum DrawMenuItem
 
 	string MenuItemImages[DSN_ITM_CNT];
+
 	MenuItemImages[ITM_LOAD] = "images\\load.jpg";
 	MenuItemImages[ITM_SAVE] = "images\\save.jpg";
 	MenuItemImages[ITM_SELECT] = "images\\select.jpg";
-	//MenuItemImages[ITM_EDIT] = "images\\edit.jpg";
-	//MenuItemImages[ITM_COPY] = "images\\copy.jpg";
-	//MenuItemImages[ITM_CUT] = "images\\cut.jpg";
-	//MenuItemImages[ITM_PASTE] = "images\\paste.jpg";
+	MenuItemImages[ITM_EDIT] = "images\\edit.jpg";
+	MenuItemImages[ITM_COPY] = "images\\copy.jpg";
+	MenuItemImages[ITM_CUT] = "images\\cut.jpg";
+	MenuItemImages[ITM_PASTE] = "images\\paste.jpg";
 	MenuItemImages[ITM_DELETE] = "images\\delete.jpg";
 	MenuItemImages[ITM_START] = "images\\start.jpg";
 	MenuItemImages[ITM_END] = "images\\end.jpg";
@@ -145,6 +154,7 @@ void Output::ClearDrawArea()
 //////////////////////////////////////////////////////////////////////////////////////////
 void Output::ClearToolBar()
 {
+	// clears the tool bar to be able to switch between toolbars.
 	pWind->SetPen(RED, 2);
 	pWind->SetBrush(WHITE);
 	pWind->DrawRectangle(0, 0, UI.width, UI.ToolBarHeight);
@@ -189,6 +199,7 @@ void Output::DrawAssign(Point Left, int width, int height, string Text, bool Sel
 	//Draw the statement block rectangle
 	pWind->DrawRectangle(Left.x, Left.y, Left.x + width, Left.y + height);
 	
+	// get the string width and height to accurately center
 	pWind->GetStringSize(sWidth, sHeight, Text);
 
 	//Write statement text
@@ -208,7 +219,8 @@ void Output::DrawStart(Point Left, int width, int height, bool Selected) {
 
 	//Draw the statement block rectangle
 	pWind->DrawEllipse(Left.x, Left.y, Left.x + width, Left.y + height);
-
+	
+	// get the string width and height to accurately center
 	pWind->GetStringSize(sWidth, sHeight, text);
 
 	//Write statement text
@@ -228,6 +240,7 @@ void Output::DrawEnd(Point Left, int width, int height, bool Selected) {
 	//Draw the statement block rectangle
 	pWind->DrawEllipse(Left.x, Left.y, Left.x + width, Left.y + height);
 
+	// get the string width and height to accurately center
 	pWind->GetStringSize(sWidth, sHeight, text);
 
 	//Write statement text
@@ -251,6 +264,7 @@ void Output::DrawConditionalStat(Point Left, int width, int height, string Text,
 	//Draw the statement block rectangle
 	pWind->DrawPolygon(xValues, yValues, vertices);
 
+	// get the string width and height to accurately center
 	pWind->GetStringSize(sWidth, sHeight, Text);
 
 	//Write statement text
@@ -273,6 +287,7 @@ void Output::DrawRead(Point Left, int width, int height, string text, bool Selec
 	//Draw the statement block rectangle
 	pWind->DrawPolygon(xValues, yValues, vertices);
 
+	// get the string width and height to accurately center
 	pWind->GetStringSize(sWidth, sHeight, text);
 
 	//Write statement text
@@ -296,6 +311,7 @@ void Output::DrawWrite(Point Left, int width, int height, string text, bool Sele
 	//Draw the statement block rectangle
 	pWind->DrawPolygon(xValues, yValues, vertices);
 
+	// get the string width and height to accurately center
 	pWind->GetStringSize(sWidth, sHeight, text);
 
 	//Write statement text
@@ -312,7 +328,6 @@ void Output::DrawConnector(Point start, Point end, bool Selected) {
 	
 	pWind->DrawLine(start.x, start.y, end.x, end.y);
 }
-
 //////////////////////////////////////////////////////////////////////////////////////////
 Output::~Output()
 {

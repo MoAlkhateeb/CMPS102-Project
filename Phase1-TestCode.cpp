@@ -171,18 +171,18 @@ int main()
 
 	//Drawing edited (normal) (non-empty) coditional statement
 	P.x = 100;	P.y = 100;
-	pOut->DrawConditionalStat(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "X > 100");
+	pOut->DrawConditionalStat(P, UI.CONDITION_WDTH, UI.CONDITION_HI, "X > 100");
 
 	//Drawing (highlighted) (non-empty) conditional statement
 	P.x = 300;	P.y = 100;
-	pOut->DrawConditionalStat(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Y == 2", true);
+	pOut->DrawConditionalStat(P, UI.CONDITION_WDTH, UI.CONDITION_HI, "Y == 2", true);
 
 	P.x = 100;	P.y = 300;
-	pOut->DrawConditionalStat(P, UI.ASSGN_WDTH, UI.ASSGN_HI, " >= ");
+	pOut->DrawConditionalStat(P, UI.CONDITION_WDTH, UI.CONDITION_HI, " >= ");
 
 	//Drawing (highlighted) (non-empty) conditional statement
 	P.x = 300;	P.y = 300;
-	pOut->DrawConditionalStat(P, UI.ASSGN_WDTH, UI.ASSGN_HI, " == ", true);
+	pOut->DrawConditionalStat(P, UI.CONDITION_WDTH, UI.CONDITION_HI, " == ", true);
 
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
@@ -197,19 +197,19 @@ int main()
 
 	//Drawing edited (normal) end statement
 	P.x = 100;	P.y = 100;
-	pOut->DrawEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, false);
+	pOut->DrawEnd(P, UI.END_WDTH, UI.END_HI, false);
 
 	//Drawing (highlighted) end statement
 	P.x = 100;	P.y = 300;
-	pOut->DrawEnd(P, UI.ASSGN_WDTH, UI.ASSGN_HI, true);
+	pOut->DrawEnd(P, UI.END_WDTH, UI.END_HI, true);
 
 	//Drawing (highlighted) start statement
 	P.x = 300;	P.y = 100;
-	pOut->DrawStart(P, UI.ASSGN_WDTH, UI.ASSGN_HI, false);
+	pOut->DrawStart(P, UI.END_WDTH, UI.END_HI, false);
 
 	//Drawing (highlighted) start statement
 	P.x = 300;	P.y = 300;
-	pOut->DrawStart(P, UI.ASSGN_WDTH, UI.ASSGN_HI, true);
+	pOut->DrawStart(P, UI.END_WDTH, UI.END_HI, true);
 
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
@@ -224,18 +224,18 @@ int main()
 	// 
 	//Drawing (highlighted) write statement
 	P.x = 100;	P.y = 150;
-	pOut->DrawRead(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "X", false);
+	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "X", false);
 
 	//Drawing (highlighted) write statement
 	P.x = 100;	P.y = 225;
-	pOut->DrawRead(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Y", true);
+	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "Y", true);
 
 	P.x = 100;	P.y = 400;
-	pOut->DrawRead(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "", false);
+	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "", false);
 
 	//Drawing (highlighted) write statement
 	P.x = 100;	P.y = 475;
-	pOut->DrawRead(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "", true);
+	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "", true);
 
 	pIn->GetPointClicked(P);
 
@@ -249,16 +249,16 @@ int main()
 
 
 	P.x = 400;	P.y = 150;
-	pOut->DrawWrite(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Hello, world", false);
+	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "Hello, world", false);
 
 	P.x = 400;	P.y = 225;
-	pOut->DrawWrite(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Hello, world", true);
+	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "Hello, world", true);
 
 	P.x = 400;	P.y = 400;
-	pOut->DrawWrite(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "", false);
+	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "", false);
 
 	P.x = 400;	P.y = 475;
-	pOut->DrawWrite(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "", true);
+	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "", true);
 
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
@@ -323,11 +323,17 @@ int main()
 	double value = pIn->GetValue(pOut);
 	pOut->PrintMessage(std::to_string(value));
 
+	pIn->GetPointClicked(P);	//Wait for any click
+
 	string name = pIn->GetVariable(pOut);
 	pOut->PrintMessage(name);
 
+	pIn->GetPointClicked(P);	//Wait for any click
+
 	string arithOp = pIn->GetArithOperator(pOut);
 	pOut->PrintMessage(arithOp);
+
+	pIn->GetPointClicked(P);	//Wait for any click
 
 	string compOp = pIn->GetCompOperator(pOut);
 	pOut->PrintMessage(compOp);
@@ -426,6 +432,9 @@ int main()
 			break;
 		case DSN_TOOL:
 			pOut->PrintMessage("Action: DSN_TOOL");
+			break;
+		case SIM_TOOL:
+			pOut->PrintMessage("Action SIM_TOOL");
 			break;
 		case STATUS:
 			pOut->PrintMessage("Action: STATUS");

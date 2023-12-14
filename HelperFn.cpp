@@ -4,9 +4,10 @@
 bool IsValue(std::string input) {
     // checks if the input string is a double value
     // return true if it's double value, false otherwise
+    
     std::regex validDoubleRegex(
         "[+-]?([0-9]+(.?)[0-9]*|[0-9]*(.?)[0-9]+)([eE][0-9]+)?");
-
+    
     if (std::regex_match(input, validDoubleRegex)) return true;
     return false;
 }

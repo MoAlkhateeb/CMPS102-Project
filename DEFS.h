@@ -39,16 +39,14 @@ enum ActionType // The actions supported
 
 	EXIT,		//Exit the application
 
-
-	//TODO: ADD THE ACTIONS OF SIMULATION MODE
-	VALIDATE_FLOWCHART, 
-	RUN_SIM,
+	VALIDATE_FLOWCHART,  // Validate the flowchart
+	RUN_SIM, // Run the simulation
 
 
 	DRAWING_AREA,  //A click on the drawing area
 	OUTPUT_AREA,   //A click on the output area
 	DSN_TOOL,	   //A click on an empty place in the design tool bar
-	SIM_TOOL,
+	SIM_TOOL,      //A click on an empty place in the simulation tool bar
 	STATUS 		   //A click on the status bar
 };
 
@@ -63,10 +61,10 @@ enum DesignMenuItem //The items of the design menu --> THE ORDER MATTERS
 
 	ITM_SELECT,
 
-	//ITM_EDIT,
-	//ITM_COPY,
-	//ITM_CUT,
-	//ITM_PASTE,
+	ITM_EDIT,
+	ITM_COPY,
+	ITM_CUT,
+	ITM_PASTE,
 	ITM_DELETE,
 
 	ITM_START, 
