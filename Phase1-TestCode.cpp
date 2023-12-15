@@ -78,6 +78,7 @@ int main()
 			pOut->PrintMessage("Text is neither a variable nor a value.");
 	}
 
+	pIn->GetPointClicked(P);	//Wait for any click
 
 	//Starting the input and output classes test
 	pOut->PrintMessage("This demo is to test input and output classes, Click anywhere to start the test");
@@ -164,10 +165,11 @@ int main()
 	P.x = 300;	P.y = 100;
 	pOut->DrawConditionalStat(P, UI.CONDITION_WDTH, UI.CONDITION_HI, "Y == 2", true);
 
+	//Drawing (normal) (empty) conditional statement
 	P.x = 100;	P.y = 300;
 	pOut->DrawConditionalStat(P, UI.CONDITION_WDTH, UI.CONDITION_HI, " >= ");
 
-	//Drawing (highlighted) (non-empty) conditional statement
+	//Drawing (highlighted) (empty) conditional statement
 	P.x = 300;	P.y = 300;
 	pOut->DrawConditionalStat(P, UI.CONDITION_WDTH, UI.CONDITION_HI, " == ", true);
 
@@ -186,7 +188,7 @@ int main()
 	P.x = 100;	P.y = 300;
 	pOut->DrawEnd(P, UI.END_WDTH, UI.END_HI, true);
 
-	//Drawing (highlighted) start statement
+	//Drawing (normal) start statement
 	P.x = 300;	P.y = 100;
 	pOut->DrawStart(P, UI.END_WDTH, UI.END_HI);
 
@@ -201,15 +203,19 @@ int main()
 	//Drawing Read statements in all posible states
 	pOut->PrintMessage("Drawing Read Statement in ALL STATES, Click to continue");
 
+	// Drawing (normal) (non-empty) read statement
 	P.x = 100;	P.y = 150;
 	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "X");
 
+	// Drawing (highlighted) (non-empty) read statement
 	P.x = 100;	P.y = 225;
 	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "Y", true);
 
+	// Drawing (normal) (empty) read statement
 	P.x = 100;	P.y = 400;
 	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "");
 
+	// Drawing (highlighted) (empty) read statement
 	P.x = 100;	P.y = 475;
 	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "", true);
 
@@ -219,15 +225,19 @@ int main()
 	//Drawing Write statements in all posible states
 	pOut->PrintMessage("Drawing Write Statement in ALL STATES, Click to continue");
 
+	// Drawing (normal) (non-empty) write statement
 	P.x = 400;	P.y = 150;
 	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "Hello, world");
 
+	// Drawing (highlighted) (non-empty) write statement
 	P.x = 400;	P.y = 225;
 	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "Hello, world", true);
 
+	// Drawing (normal) (empty) write statement
 	P.x = 400;	P.y = 400;
 	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "");
 
+	// Drawing (highlighted) (empty) write statement
 	P.x = 400;	P.y = 475;
 	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "", true);
 
@@ -248,13 +258,17 @@ int main()
 
 	pOut->PrintMessage("Click the end point.");
 	pIn->GetPointClicked(end);
-	pOut->DrawConnector(start, end, false);
+
+	// drawing normal connector
+	pOut->DrawConnector(start, end);
 
 	pOut->PrintMessage("Click the start point.");
 	pIn->GetPointClicked(start); //Wait for any click
 
 	pOut->PrintMessage("Click the end point.");
 	pIn->GetPointClicked(end);	//Wait for any click
+
+	// drawing highlighted connector
 	pOut->DrawConnector(start, end, true);
 
 	// wait before proceeding to the next test
