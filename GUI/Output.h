@@ -15,7 +15,6 @@ public:
 
 	void CreateStatusBar(); //Creates status bar
 
-	//TODO: Complete the following 2 functions
 	void CreateDesignToolBar();	//Tool bar of the design mode
 	void CreateSimulationToolBar(); //Tool bar of the simulation mode
 
@@ -37,6 +36,8 @@ public:
 	void DrawWrite(Point Left, int width, int height, string text, bool Selected = false);
 	void DrawConnector(Point start, Point end, bool Selected = false);
 
+	// draws an arow head in different orientations
+	void DrawArrowHead(Point end, ArrowDirection direction, bool Selected = false);
 	~Output();
 };
 

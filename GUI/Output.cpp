@@ -41,6 +41,9 @@ Output::Output()
 	UI.END_WDTH = 150;
 	UI.END_HI = 50;
 
+	UI.ArrowSideLength = 15;
+	UI.ArrowSpreadAngle = 45.0;
+
 	//Create the output window
 	pWind = CreateWind(UI.width, UI.height, UI.wx, UI.wy);
 	//Change the title
@@ -321,6 +324,7 @@ void Output::DrawWrite(Point Left, int width, int height, string text, bool Sele
 }
 
 void Output::DrawConnector(Point start, Point end, bool Selected) {
+	// allows you to draw a line between 2 points
 	if (Selected)	//if connector is selected, it should be highlighted
 		pWind->SetPen(UI.HighlightColor, 3);	//use highlighting color
 	else
@@ -328,6 +332,47 @@ void Output::DrawConnector(Point start, Point end, bool Selected) {
 	
 	pWind->DrawLine(start.x, start.y, end.x, end.y);
 }
+
+void Output::DrawArrowHead(Point end, ArrowDirection direction, bool Selected) {
+	// draws an arrow head at the point "end" in all four orientations (LEFT, RIGHT, UP, DOWN) 
+
+	if (Selected)	//if connector is selected, it should be highlighted
+		pWind->SetPen(UI.HighlightColor, 3);	//use highlighting color
+	else
+		pWind->SetPen(UI.DrawColor, 3);	//use normal color
+
+	// cdPi is defined in CMUGraphics.h
+	double angleRad = UI.ArrowSpreadAngle * 90 / cdPi; // half the angle in radians
+	int delta1 = (UI.ArrowSideLength * cos(angleRad)); // dx in case of RIGHT or LEFT, dy otherwise
+	int delta2 = (UI.ArrowSideLength * sin(angleRad)); // dy in case of RIGHT or LEFT, dx otherwise
+
+	int x1, x2, y1, y2;
+	switch (direction) {
+	case RIGHT:
+		x2 = x1 = end.x - delta1;
+		y1 = end.y - delta2;
+		y2 = end.y + delta2;
+		break;
+	case LEFT:
+		x2 = x1 = end.x + delta1;
+		y1 = end.y - delta2;
+		y2 = end.y + delta2;
+		break;
+	case UP:
+		x1 = end.x - delta2;
+		y2 = y1 = end.y + delta1;
+		x2 = end.x + delta2;
+		break;
+	default: // DOWN
+		x1 = end.x - delta2;
+		y2 = y1 = end.y - delta1;
+		x2 = end.x + delta2;
+	}
+
+	// the arrow head is represented with a triangle
+	pWind->DrawTriangle(end.x, end.y, x1, y1, x2, y2, FRAME);
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 Output::~Output()
 {

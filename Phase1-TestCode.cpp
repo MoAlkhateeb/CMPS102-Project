@@ -21,18 +21,9 @@ int main()
 	pOut->PrintMessage("TEST0: Testing the helper functions");
 	pIn->GetPointClicked(P);	//Wait for any click
 
-	////////////
-	//TODO: Add code here to 
-	// 1- Read a (string) from the user --> just call the already impemented Input::GetString(...) fn
-	// 2- Pass this string to IsValue(...) helper function 
-	// 3- Print a message indicating its output (whether it's a value or not)
-	// 4- -- REPEAT the same previous 3 steps to test: IsVariable(...) helper function
-	// 5- -- REPEAT the same first 3 steps to test: ValueORVariable(...) helper function
-	////////////
-
 	string text;
 
-
+	// testing IsValue and printing corresponding message
 	pOut->PrintMessage("Testing IsValue... Enter text");
 	text = pIn->GetString(pOut);
 	if (IsValue(text))
@@ -42,6 +33,7 @@ int main()
 
 	pIn->GetPointClicked(P);	//Wait for any click
 
+	// testing IsVariable and printing corresponding message
 	pOut->PrintMessage("Testing IsVariable... Enter text");
 	text = pIn->GetString(pOut);
 	if (IsVariable(text))
@@ -51,6 +43,7 @@ int main()
 
 	pIn->GetPointClicked(P);	//Wait for any click
 
+	// testing IsArithOperator and printing corresponding message
 	pOut->PrintMessage("Testing IsArithOperator... Enter text");
 	text = pIn->GetString(pOut);
 	if (IsArithOperator(text))
@@ -60,6 +53,7 @@ int main()
 
 	pIn->GetPointClicked(P);	//Wait for any click
 
+	// testing IsCompOperator and printing corresponding message
 	pOut->PrintMessage("Testing IsCompOperator... Enter text");
 	text = pIn->GetString(pOut);
 	if (IsCompOperator(text))
@@ -69,6 +63,7 @@ int main()
 
 	pIn->GetPointClicked(P);	//Wait for any click
 
+	// testing ValueOrVariable and printing corresponding message
 	pOut->PrintMessage("Testing ValueOrVariable... Enter text");
 	text = pIn->GetString(pOut);
 	switch (ValueOrVariable(text)) {
@@ -83,7 +78,6 @@ int main()
 			pOut->PrintMessage("Text is neither a variable nor a value.");
 	}
 
-	pIn->GetPointClicked(P);
 
 	//Starting the input and output classes test
 	pOut->PrintMessage("This demo is to test input and output classes, Click anywhere to start the test");
@@ -138,21 +132,19 @@ int main()
 	///2.2- Variable assignment & single operator assignment
 	pOut->PrintMessage("Drawing other Assignment statements in ALL STATES, Click to continue");
 
-	//Note: for other type of assignment, you can use the same draw assignment function but passing a different text
-
-	//Drawing edited (normal) (non-empty) assignment statement --> STATE 3
+	//Drawing edited (normal) (non-empty) assignment statement
 	P.x = 300;	P.y = 100;
 	pOut->DrawAssign(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Salary = X");
 
-	//Drawing (highlighted) (non-empty) assignment statement --> STATE 4
+	//Drawing (highlighted) (non-empty) assignment statement
 	P.x = 100;	P.y = 100;
 	pOut->DrawAssign(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Salary = X", true);
 
-	//Drawing edited (normal) (non-empty) assignment statement --> STATE 3
+	//Drawing edited (normal) (non-empty) assignment statement
 	P.x = 300;	P.y = 300;
 	pOut->DrawAssign(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Salary = A + 10");
 
-	//Drawing (highlighted) (non-empty) assignment statement --> STATE 4
+	//Drawing (highlighted) (non-empty) assignment statement
 	P.x = 100;	P.y = 300;
 	pOut->DrawAssign(P, UI.ASSGN_WDTH, UI.ASSGN_HI, "Salary = 3 * 5", true);
 
@@ -163,11 +155,6 @@ int main()
 	/// 2.3- Conditional statement test
 	//Drawing Conditional statements in all posible states
 	pOut->PrintMessage("Drawing Conditional Statement in ALL STATES, Click to continue");
-	
-	////////////
-	//TODO: Add code to draw different (Conditional) statements here in ALL STATES
-	////////////
-
 
 	//Drawing edited (normal) (non-empty) coditional statement
 	P.x = 100;	P.y = 100;
@@ -191,13 +178,9 @@ int main()
 	//Drawing Start & End statements in all posible states
 	pOut->PrintMessage("Drawing Start & End Statements in ALL STATES, Click to continue");
 
-	////////////
-	//TODO: Add code to draw different (Start & End) statements here  in ALL STATES
-	////////////
-
 	//Drawing edited (normal) end statement
 	P.x = 100;	P.y = 100;
-	pOut->DrawEnd(P, UI.END_WDTH, UI.END_HI, false);
+	pOut->DrawEnd(P, UI.END_WDTH, UI.END_HI);
 
 	//Drawing (highlighted) end statement
 	P.x = 100;	P.y = 300;
@@ -205,7 +188,7 @@ int main()
 
 	//Drawing (highlighted) start statement
 	P.x = 300;	P.y = 100;
-	pOut->DrawStart(P, UI.END_WDTH, UI.END_HI, false);
+	pOut->DrawStart(P, UI.END_WDTH, UI.END_HI);
 
 	//Drawing (highlighted) start statement
 	P.x = 300;	P.y = 300;
@@ -218,22 +201,15 @@ int main()
 	//Drawing Read statements in all posible states
 	pOut->PrintMessage("Drawing Read Statement in ALL STATES, Click to continue");
 
-	////////////
-	//TODO: Add code to draw different (Read) statements here in ALL STATES
-	////////////
-	// 
-	//Drawing (highlighted) write statement
 	P.x = 100;	P.y = 150;
-	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "X", false);
+	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "X");
 
-	//Drawing (highlighted) write statement
 	P.x = 100;	P.y = 225;
 	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "Y", true);
 
 	P.x = 100;	P.y = 400;
-	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "", false);
+	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "");
 
-	//Drawing (highlighted) write statement
 	P.x = 100;	P.y = 475;
 	pOut->DrawRead(P, UI.READ_WDTH, UI.READ_HI, "", true);
 
@@ -243,37 +219,27 @@ int main()
 	//Drawing Write statements in all posible states
 	pOut->PrintMessage("Drawing Write Statement in ALL STATES, Click to continue");
 
-	////////////
-	//TODO: Add code to draw different (Write) statements here in ALL STATES
-	////////////
-
-
 	P.x = 400;	P.y = 150;
-	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "Hello, world", false);
+	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "Hello, world");
 
 	P.x = 400;	P.y = 225;
 	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "Hello, world", true);
 
 	P.x = 400;	P.y = 400;
-	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "", false);
+	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "");
 
 	P.x = 400;	P.y = 475;
 	pOut->DrawWrite(P, UI.WRITE_WDTH, UI.WRITE_HI, "", true);
 
-	pIn->GetPointClicked(P);	//Wait for any click
+	// wait before proceeding to the next test
+	pIn->GetPointClicked(P);
 	pOut->ClearDrawArea();
-
-
 
 	/// 2.7- Connector test
 	//Drawing Connector in all posible states
 	pOut->PrintMessage("Drawing Connector in Normal and Highlighted STATES, Click to continue");
-	
-	////////////
-	//TODO: Add code to draw different (Connectors) here:  Normal and Highlighted
-	////////////
 
-	pIn->GetPointClicked(P);	//Wait for any click
+	pIn->GetPointClicked(P); //Wait for any click
 	pOut->ClearDrawArea();
 	
 	Point start, end;
@@ -285,23 +251,72 @@ int main()
 	pOut->DrawConnector(start, end, false);
 
 	pOut->PrintMessage("Click the start point.");
-	pIn->GetPointClicked(start);	//Wait for any click
+	pIn->GetPointClicked(start); //Wait for any click
 
 	pOut->PrintMessage("Click the end point.");
 	pIn->GetPointClicked(end);	//Wait for any click
 	pOut->DrawConnector(start, end, true);
 
-	pIn->GetPointClicked(P);	//Wait for any click
+	// wait before proceeding to the next test
+	pIn->GetPointClicked(P);
+	pOut->ClearDrawArea();
+
+	///////////////////////////////////////////////////////////////////////////////////
+	// SUBTEST: Draw arrow heads
+	///////////////////////////////////////////////////////////////////////////////////
+
+	pOut->PrintMessage("Testing the ability to add arrowheads in different orientations and highlights");
+	pIn->GetPointClicked(P); // Wait for any click
+
+	pOut->PrintMessage("Click anywhere to add an unhighlighted UP arrow");
+	pIn->GetPointClicked(P); // Wait for any click
+	pOut->DrawArrowHead(P, UP);
+
+	pOut->PrintMessage("Click anywhere to add an unhighlighted DOWN arrow");
+	pIn->GetPointClicked(P); // Wait for any click
+	pOut->DrawArrowHead(P, DOWN);
+
+	pOut->PrintMessage("Click anywhere to add an unhighlighted RIGHT arrow");
+	pIn->GetPointClicked(P); // Wait for any click
+	pOut->DrawArrowHead(P, RIGHT);
+
+	pOut->PrintMessage("Click anywhere to add an unhighlighted LEFT arrow");
+	pIn->GetPointClicked(P); // Wait for any click
+	pOut->DrawArrowHead(P, LEFT);
+
+	pOut->PrintMessage("Click anywhere to add an highlighted UP arrow");
+	pIn->GetPointClicked(P); // Wait for any click
+	pOut->DrawArrowHead(P, UP, true);
+
+	pOut->PrintMessage("Click anywhere to add an highlighted DOWN arrow");
+	pIn->GetPointClicked(P); // Wait for any click
+	pOut->DrawArrowHead(P, DOWN, true);
+
+	pOut->PrintMessage("Click anywhere to add an highlighted RIGHT arrow");
+	pIn->GetPointClicked(P); // Wait for any click
+	pOut->DrawArrowHead(P, RIGHT, true);
+
+	pOut->PrintMessage("Click anywhere to add an highlighted  LEFT arrow");
+	pIn->GetPointClicked(P); // Wait for any click
+	pOut->DrawArrowHead(P, LEFT, true);
+
+	// wait before proceeding to next test
+	pIn->GetPointClicked(P);
 	pOut->ClearDrawArea();
 
 	/// 2.8- Draw String TEST
-	
-	pOut->PrintMessage("Enter a string and then click to continue");
+	pOut->PrintMessage("Doing the draw string test, click to continue");
+	pIn->GetPointClicked(P);
+
+	pOut->PrintMessage("Enter a string");
 	text = pIn->GetString(pOut);
-	pOut->DrawString(100, 200, text);
 
 	//Drawing a String in a specific location
-	pOut->PrintMessage("String Drawn.");
+	pOut->DrawString(100, 200, text);
+
+	pOut->PrintMessage("String Drawn. Click to continue");
+
+	// wait before proceeding to next test
 	pIn->GetPointClicked(P);	//Wait for any click
 	pOut->ClearDrawArea();
 
@@ -312,14 +327,7 @@ int main()
 	pIn->GetPointClicked(P);	//Wait for any click
 	
 	pOut->PrintMessage("Testing Input ability to read strings, values, variables and operators");
-
-	////////////
-	//TODO: Add code here to 
-	// 1- Read a (double value) from the user and print it
-	// 2- Read a (variable name) from the user and print it
-	// 3- Read an (arithmatic operator) from the user and print it
-	// 4- Read a (comparison operator) from the user and print it
-	////////////
+	
 	double value = pIn->GetValue(pOut);
 	pOut->PrintMessage(std::to_string(value));
 
@@ -338,21 +346,18 @@ int main()
 	string compOp = pIn->GetCompOperator(pOut);
 	pOut->PrintMessage(compOp);
 
-	pIn->GetPointClicked(P);	//Wait for any click
+	// wait before proceeding to next test
+	pIn->GetPointClicked(P);
 	pOut->ClearDrawArea();
+
 
 	///////////////////////////////////////////////////////////////////////////////////
 	// TEST 4: Check for the user action
 	///////////////////////////////////////////////////////////////////////////////////
 	pOut->PrintMessage("TEST4: Testing Input ability to detect User Action, click anywhere");
 
+	// getting user actions and printing action
 	ActionType ActType;
-	
-	////////////
-	//TODO:  You must add a case for EACH action in the following (switch case)
-	////////////
-	////COMPLETE THE SWITCH CASE WITH ALL THE ACTIONS
-
 	do
 	{
 		ActType = pIn->GetUserAction();
@@ -449,7 +454,7 @@ int main()
 	pOut->PrintMessage("Action: EXIT, test is finished, click anywhere to exit");
 	pIn->GetPointClicked(P);
 
-
+	// deletng dynamically allocated objects
 	delete pIn;
 	delete pOut;	
 	return 0;

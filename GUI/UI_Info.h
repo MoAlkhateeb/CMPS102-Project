@@ -44,7 +44,17 @@ struct UI_Info	//User Interface Info.
 	int END_WDTH; //End statement default width
 	int END_HI;  //End statement default height
 
+	int ArrowSideLength; // side length of the arrow
+	double ArrowSpreadAngle; // angle between 2 side lengths of the arrow in degrees
+
 }UI;	//create a single global object UI
+
+enum ArrowDirection {
+	LEFT,
+	RIGHT, 
+	UP,
+	DOWN
+};
 
 struct Point	
 {
