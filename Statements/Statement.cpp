@@ -1,8 +1,10 @@
 #include "Statement.h"
 
+int Statement::CreatedStatements = 0;
+
 Statement::Statement()	
 { 
-	//TODO: set the ID with a unique value
+	ID = CreatedStatements++;
 	Text = "";
 	Selected = false;		
 }

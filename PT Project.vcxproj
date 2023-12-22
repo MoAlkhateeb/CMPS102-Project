@@ -274,6 +274,8 @@
     <ClCompile Include="GUI\Input.cpp" />
     <ClCompile Include="GUI\Output.cpp" />
     <ClCompile Include="HelperFn.cpp" />
+    <ClCompile Include="Read.h" />
+    <ClCompile Include="Start.cpp" />
     <ClCompile Include="Statements\ValueAssign.cpp" />
     <ClCompile Include="Statements\Statement.cpp" />
     <ClCompile Include="main.cpp">
@@ -305,17 +307,20 @@
     <ClInclude Include="Actions\Action.h" />
     <ClInclude Include="Actions\AddValueAssign.h" />
     <ClInclude Include="ApplicationManager.h" />
+    <ClInclude Include="Conditional.h" />
     <ClInclude Include="Connector.h" />
     <ClInclude Include="DEFS.h" />
+    <ClInclude Include="End.h" />
     <ClInclude Include="GUI\Input.h" />
     <ClInclude Include="GUI\Output.h" />
     <ClInclude Include="GUI\UI_Info.h" />
     <ClInclude Include="HelperFn.h" />
+    <ClInclude Include="OperatorAssign.h" />
+    <ClInclude Include="Start.h" />
     <ClInclude Include="Statements\ValueAssign.h" />
     <ClInclude Include="Statements\Statement.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <ClInclude Include="VariableAssign.h" />
+    <ClInclude Include="Write.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

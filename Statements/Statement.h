@@ -10,6 +10,7 @@
 class Statement
 {
 protected:
+	static int CreatedStatements;
 	int ID;			//Each Statement has an ID --> must be unique
 	string Text;	//Statement text (e.g.  "X = 5" OR "salary > 3000" and so on)
 	bool Selected;	//true if the statement is selected on the folwchart
@@ -17,7 +18,6 @@ protected:
 
 	virtual void UpdateStatementText() = 0;	//is called when any part of the stat. is edited	
 
-	/// Add more parameters if needed.
 
 public:
 	Statement();

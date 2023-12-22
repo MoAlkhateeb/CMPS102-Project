@@ -98,8 +98,7 @@ Statement *ApplicationManager::GetStatement(Point P) const
 
 	///Add your code here to search for a statement given a point P(x,y)	
 	///WITHOUT breaking class responsibilities
-
-	return NULL;
+	return nullptr;
 }
 ////////////////////////////////////////////////////////////////////////////////////
 //Returns the selected statement
