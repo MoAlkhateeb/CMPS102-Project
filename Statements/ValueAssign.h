@@ -27,7 +27,7 @@ private:
 
 	Point LeftCorner;	//left corenr of the statement block.
 
-	virtual void UpdateStatementText();
+	virtual void UpdateStatementText() override;
 	
 public:
 	ValueAssign(Point Lcorner, string LeftHS="", double RightHS=0);
@@ -35,8 +35,8 @@ public:
 	void setLHS(const string &L);
 	void setRHS(double R);
 
-	virtual void Draw(Output* pOut) const;
-
+	virtual void Draw(Output* pOut) const override;
+	bool ClickOnStatement(Point click) const override;
 };
 
 #endif

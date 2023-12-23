@@ -1,9 +1,9 @@
 #include "ValueAssign.h"
 #include <sstream>
-
+#include <iostream>
 using namespace std;
 
-ValueAssign::ValueAssign(Point Lcorner, string LeftHS, double RightHS)
+ValueAssign::ValueAssign(Point Lcorner, string LeftHS, double RightHS) : Statement()
 {
 	// Note: The LeftHS and RightHS should be validated inside (AddValueAssign) action
 	//       before passing it to the constructor of ValueAssign
@@ -49,6 +49,13 @@ void ValueAssign::UpdateStatementText()
 {
 	//Build the statement text: Left handside then equals then right handside
 	ostringstream T;
-	T<<LHS<<" = "<<RHS;	
+	T<<LHS<<" = "<< RHS;	
 	Text = T.str();	 
+}
+
+bool ValueAssign::ClickOnStatement(Point click) const {
+	if (click.x < LeftCorner.x || click.x > (LeftCorner.x + UI.ASSGN_WDTH)) return false;
+	if (click.y < LeftCorner.y || click.y > (LeftCorner.y + UI.ASSGN_HI)) return false;
+	
+	return true;
 }

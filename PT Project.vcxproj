@@ -124,6 +124,9 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actions\AddConditional.cpp" />
+    <ClCompile Include="Actions\AddOperatorAssign.cpp" />
+    <ClCompile Include="Actions\AddVariableAssign.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -274,16 +277,24 @@
     <ClCompile Include="GUI\Input.cpp" />
     <ClCompile Include="GUI\Output.cpp" />
     <ClCompile Include="HelperFn.cpp" />
-    <ClCompile Include="Read.h" />
-    <ClCompile Include="Start.cpp" />
+    <ClCompile Include="Statements\Conditional.cpp" />
+    <ClCompile Include="Statements\End.cpp" />
+    <ClCompile Include="Statements\OperatorAssign.cpp" />
+    <ClCompile Include="Statements\Read.cpp" />
+    <ClCompile Include="Statements\Start.cpp" />
     <ClCompile Include="Statements\ValueAssign.cpp" />
     <ClCompile Include="Statements\Statement.cpp" />
     <ClCompile Include="main.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="Statements\VariableAssign.cpp" />
+    <ClCompile Include="Statements\Write.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actions\AddConditional.h" />
+    <ClInclude Include="Actions\AddOperatorAssign.h" />
+    <ClInclude Include="Actions\AddVariableAssign.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
     <ClInclude Include="CMUgraphicsLib\colors.h" />
@@ -307,20 +318,21 @@
     <ClInclude Include="Actions\Action.h" />
     <ClInclude Include="Actions\AddValueAssign.h" />
     <ClInclude Include="ApplicationManager.h" />
-    <ClInclude Include="Conditional.h" />
     <ClInclude Include="Connector.h" />
     <ClInclude Include="DEFS.h" />
-    <ClInclude Include="End.h" />
     <ClInclude Include="GUI\Input.h" />
     <ClInclude Include="GUI\Output.h" />
     <ClInclude Include="GUI\UI_Info.h" />
     <ClInclude Include="HelperFn.h" />
-    <ClInclude Include="OperatorAssign.h" />
-    <ClInclude Include="Start.h" />
+    <ClInclude Include="Statements\Conditional.h" />
+    <ClInclude Include="Statements\End.h" />
+    <ClInclude Include="Statements\OperatorAssign.h" />
+    <ClInclude Include="Statements\Read.h" />
+    <ClInclude Include="Statements\Start.h" />
     <ClInclude Include="Statements\ValueAssign.h" />
     <ClInclude Include="Statements\Statement.h" />
-    <ClInclude Include="VariableAssign.h" />
-    <ClInclude Include="Write.h" />
+    <ClInclude Include="Statements\VariableAssign.h" />
+    <ClInclude Include="Statements\Write.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

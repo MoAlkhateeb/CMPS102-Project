@@ -1,5 +1,8 @@
 #include "ApplicationManager.h"
 #include "Actions\AddValueAssign.h"
+#include "Actions\AddConditional.h"
+#include "Actions\AddVariableAssign.h"
+#include "Actions\AddOperatorAssign.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -48,8 +51,15 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case ADD_CONDITION:
-			///create AddCondition Action here
+			pAct = new AddConditional(this);
+			break;
 
+		case ADD_VAR_ASSIGN:
+			pAct = new AddVariableAssign(this);
+			break;
+
+		case ADD_OPER_ASSIGN:
+			pAct = new AddOperatorAssign(this);
 			break;
 
 		case SELECT:
@@ -98,8 +108,28 @@ Statement *ApplicationManager::GetStatement(Point P) const
 
 	///Add your code here to search for a statement given a point P(x,y)	
 	///WITHOUT breaking class responsibilities
+	
+
+	for (int i = 0; i < StatCount; i++) {
+		if (StatList[i]->ClickOnStatement(P)) {
+			return StatList[i];
+		}
+	}
 	return nullptr;
 }
+
+
+void ApplicationManager::AddConnector(Connector* pConn) {
+	if (ConnCount < MaxCount)
+		ConnList[ConnCount++] = pConn;
+
+}
+
+Connector* ApplicationManager::GetConnector(Point P) const {
+
+	return nullptr;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////
 //Returns the selected statement
 Statement *ApplicationManager::GetSelectedStatement() const

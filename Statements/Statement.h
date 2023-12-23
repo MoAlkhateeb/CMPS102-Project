@@ -24,7 +24,7 @@ public:
 	void SetSelected(bool s);
 	bool IsSelected() const;
 
-	virtual void Draw(Output* pOut) const  = 0 ;	//Draw the statement
+	virtual void Draw(Output* pOut) const = 0 ;	//Draw the statement
 	
 	
 
@@ -42,7 +42,7 @@ public:
 	//[BONUS] virtual void GenerateCode(ofstream &OutFile) = 0;	//write the statement code to a file
 
 
-	///TODO: Add more functions if needed
+	virtual bool ClickOnStatement(Point click) const = 0;
 
 };
 

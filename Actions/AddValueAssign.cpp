@@ -25,12 +25,12 @@ void AddValueAssign::ReadActionParameters()
 	pIn->GetPointClicked(Position);
 	pOut->ClearStatusBar();		
 
-	//TODO: Ask the user in the status bar to enter the LHS and set the data member
+	pOut->PrintMessage("Enter a Variable Name for the LHS: ");
+	LHS = pIn->GetVariable(pOut);
 
-	//TODO: Ask the user in the status bar to enter the RHS and set the data member
-
-	//Note: You should validate the LHS to be variable name and RHS to be a value
-	//      Call the appropriate functions for this.
+	pOut->PrintMessage("Enter a value for the RHS: ");
+	RHS = pIn->GetValue(pOut);
+	pOut->ClearStatusBar();
 }
 
 void AddValueAssign::Execute()
@@ -43,9 +43,7 @@ void AddValueAssign::Execute()
 	Corner.x = Position.x - UI.ASSGN_WDTH/2;
 	Corner.y = Position.y ;
 	
-	ValueAssign *pAssign = new ValueAssign(Corner, "", 0);
-	//TODO: should set the LHS and RHS of pAssign statement
-	//      with the data members set and validated before in ReadActionParameters()
+	ValueAssign *pAssign = new ValueAssign(Corner, LHS, RHS);
 
 	pManager->AddStatement(pAssign); // Adds the created statement to application manger's statement list
 }

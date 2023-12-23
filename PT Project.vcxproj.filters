@@ -155,11 +155,35 @@
     <ClCompile Include="GUI\Output.cpp">
       <Filter>GUI Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Read.h">
+    <ClCompile Include="Statements\Start.cpp">
       <Filter>Statements</Filter>
     </ClCompile>
-    <ClCompile Include="Start.cpp">
+    <ClCompile Include="Statements\End.cpp">
       <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\Read.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\Write.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\Conditional.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\AddConditional.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\VariableAssign.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\AddVariableAssign.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Statements\OperatorAssign.cpp">
+      <Filter>Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\AddOperatorAssign.cpp">
+      <Filter>Action Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -252,23 +276,35 @@
     <ClInclude Include="GUI\UI_Info.h">
       <Filter>GUI Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Start.h">
+    <ClInclude Include="Statements\Start.h">
       <Filter>Statements</Filter>
     </ClInclude>
-    <ClInclude Include="Write.h">
+    <ClInclude Include="Statements\End.h">
       <Filter>Statements</Filter>
     </ClInclude>
-    <ClInclude Include="VariableAssign.h">
+    <ClInclude Include="Statements\Read.h">
       <Filter>Statements</Filter>
     </ClInclude>
-    <ClInclude Include="OperatorAssign.h">
+    <ClInclude Include="Statements\Write.h">
       <Filter>Statements</Filter>
     </ClInclude>
-    <ClInclude Include="Conditional.h">
+    <ClInclude Include="Statements\Conditional.h">
       <Filter>Statements</Filter>
     </ClInclude>
-    <ClInclude Include="End.h">
+    <ClInclude Include="Actions\AddConditional.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Statements\VariableAssign.h">
       <Filter>Statements</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddVariableAssign.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Statements\OperatorAssign.h">
+      <Filter>Statements</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\AddOperatorAssign.h">
+      <Filter>Action Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

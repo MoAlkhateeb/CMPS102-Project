@@ -26,8 +26,8 @@ Output::Output()
 
 	// all the following statement width and heights will match the assignment statement's width & height.
 
-	UI.CONDITION_WDTH = 150;
-    UI.CONDITION_HI = 50;
+	UI.CONDITION_WDTH = 190;
+    UI.CONDITION_HI = 80;
 
 	UI.READ_WDTH = 150;
 	UI.READ_HI = 50;

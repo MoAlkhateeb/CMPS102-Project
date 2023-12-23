@@ -18,16 +18,17 @@ private:
 	// to be set in ReadActionParameters() then used in Execute()
 
 	Point Position;	//Position where the user clicks to add the stat.
-	//TODO: you should add LHS and RHS of the assignment statement as parameters
+	string LHS;
+	double RHS;
 
 public:
 	AddValueAssign(ApplicationManager *pAppManager);
 
 	//Read Assignemt statements position
-	virtual void ReadActionParameters();
+	virtual void ReadActionParameters() override;
 	
 	//Create and add an assignemnt statement to the list of statements
-	virtual void Execute() ;
+	virtual void Execute() override;
 	
 };
 

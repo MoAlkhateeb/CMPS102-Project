@@ -36,6 +36,6 @@ Point Connector::getEndPoint()
 
 void Connector::Draw(Output* pOut) const
 {
-	///TODO: Call Output to draw a connector from SrcStat to DstStat on the output window
+
 }
 
