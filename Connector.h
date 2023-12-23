@@ -12,6 +12,9 @@ private:
 	Statement *DstStat;	//The destination statement of the connector
 	Point Start;	//Start point of the connector
 	Point End;		//End point of the connector
+
+	bool Selected;
+
 public:
 	Connector(Statement* Src, Statement* Dst);
 
@@ -27,7 +30,10 @@ public:
 	Point getEndPoint();
 
 	void Draw(Output* pOut) const;
-	
+
+	void SetSelected(bool s);
+	bool IsSelected() const;
+
 
 };
 

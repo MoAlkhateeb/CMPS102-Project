@@ -127,6 +127,7 @@
     <ClCompile Include="Actions\AddConditional.cpp" />
     <ClCompile Include="Actions\AddOperatorAssign.cpp" />
     <ClCompile Include="Actions\AddVariableAssign.cpp" />
+    <ClCompile Include="Actions\SelectDeselect.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -295,6 +296,7 @@
     <ClInclude Include="Actions\AddConditional.h" />
     <ClInclude Include="Actions\AddOperatorAssign.h" />
     <ClInclude Include="Actions\AddVariableAssign.h" />
+    <ClInclude Include="Actions\SelectDeselect.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
     <ClInclude Include="CMUgraphicsLib\colors.h" />

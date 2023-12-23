@@ -12,10 +12,9 @@ private:
 
 	Connector* pOutConn;
 	
-	Point Inlet;
-	Point Outlet;
-
-	Point LeftCorner;
+	Point Inlet; // top corner
+	Point TrueOutlet; // left corner
+	Point FalseOutlet; // right corner 
 
 	virtual void UpdateStatementText() override;
 

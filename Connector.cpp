@@ -7,6 +7,7 @@ Connector::Connector(Statement* Src, Statement* Dst)
 	
 	SrcStat = Src;
 	DstStat = Dst;
+	Selected = false;
 }
 
 void Connector::setSrcStat(Statement *Src)
@@ -37,5 +38,15 @@ Point Connector::getEndPoint()
 void Connector::Draw(Output* pOut) const
 {
 
+}
+
+void Connector::SetSelected(bool s)
+{
+	Selected = s;
+}
+
+bool Connector::IsSelected() const
+{
+	return Selected;
 }
 

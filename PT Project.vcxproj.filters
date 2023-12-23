@@ -185,6 +185,9 @@
     <ClCompile Include="Actions\AddOperatorAssign.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Actions\SelectDeselect.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMUgraphicsLib\auxil.h">
@@ -304,6 +307,9 @@
       <Filter>Statements</Filter>
     </ClInclude>
     <ClInclude Include="Actions\AddOperatorAssign.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\SelectDeselect.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
   </ItemGroup>

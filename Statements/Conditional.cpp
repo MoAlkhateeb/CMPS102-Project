@@ -17,13 +17,17 @@ Conditional::Conditional(Point Lcorner, string LeftHS, string Operator, string R
 
 	UpdateStatementText();
 
-	LeftCorner = Lcorner;
 
-	Inlet.x = LeftCorner.x + UI.CONDITION_WDTH / 2;
-	Inlet.y = LeftCorner.y - UI.CONDITION_HI / 2;
+	// left corner
+	TrueOutlet = Lcorner;
 
-	Outlet.x = Inlet.x;
-	Outlet.y = LeftCorner.y + UI.CONDITION_HI / 2;
+	// top corner
+	Inlet.x = TrueOutlet.x + UI.CONDITION_WDTH / 2;
+	Inlet.y = TrueOutlet.y - UI.CONDITION_HI / 2;
+
+	// right corner
+	FalseOutlet.x = TrueOutlet.x + UI.CONDITION_WDTH;
+	FalseOutlet.y = TrueOutlet.y;
 
 }
 
@@ -40,50 +44,38 @@ void Conditional::setRHS(const string& R) {
 	UpdateStatementText();
 }
 void Conditional::Draw(Output* pOut) const {
-	pOut->DrawConditionalStat(LeftCorner, UI.CONDITION_WDTH, UI.CONDITION_HI, Text, Selected);
+	pOut->DrawConditionalStat(TrueOutlet, UI.CONDITION_WDTH, UI.CONDITION_HI, Text, Selected);
 }
 
 bool Conditional::ClickOnStatement(Point click) const {
 
-	Point left;
-	Point top;
-	Point right;
 	Point bottom;
 	
 	// getting the diamond corners
-	left.x = LeftCorner.x;
-	left.y = LeftCorner.y;
-	right.x = left.x + UI.CONDITION_WDTH;
-	right.y = left.y;
-	top.x = left.x + UI.CONDITION_WDTH / 2;
-	top.y = left.y - UI.CONDITION_WDTH / 2;
-	bottom.x = top.x;
-	bottom.y = top.y - UI.CONDITION_HI;
+	
+	bottom.x = Inlet.x;
+	bottom.y = Inlet.y + UI.CONDITION_HI;
+	
+	if (click.x < TrueOutlet.x || click.x > FalseOutlet.x) return false;
+	if (click.y < Inlet.y || click.y > bottom.y) return false;
 
+	double gradient = (Inlet.y - TrueOutlet.y) / (double)(Inlet.x - TrueOutlet.x);
+	
 	// top left line
-	int gradient1 = (left.y - top.y) / (left.x - top.x);
-	int y1 = gradient1 * click.x + left.y - gradient1 * top.x;
-
-	if (click.y < y1) return false;
+	int y1 = gradient * (click.x - TrueOutlet.x) + TrueOutlet.y;
+	
+	// bottom left
+	int y3 = -gradient * (click.x - TrueOutlet.x) + TrueOutlet.y;
 
 	// top right line
-	int gradient2 = (right.y - top.y) / (right.x - top.x);
-	int y2 = gradient2 * click.x + right.y - gradient2 * top.x;
-
-	if (click.y < y2) return false;
-
-	// bottom left
-	int gradient3 = (left.y - bottom.y) / (left.x - bottom.x);
-	int y3 = gradient3 * click.x + left.y - gradient3 * bottom.x;
-
-	if (click.y > y3) return false;
+	int y2 = -gradient * (click.x - FalseOutlet.x) + FalseOutlet.y;
 
 	// bottom right
-	int gradient4 = (right.y - bottom.y) / (right.x - bottom.x);
-	int y4 = gradient4 * click.x + right.y - gradient4 * bottom.x;
+	int y4 = gradient * (click.x - FalseOutlet.x) + FalseOutlet.y;
 
-	if (click.y > y4) return false;
+	if (click.x > Inlet.x && (click.y > y2 && click.y < y4)) return true;
+	else if (click.x < Inlet.x && (click.y < y3 && click.y > y1)) return true;
 
 
-	return true;
+	return false;
 }

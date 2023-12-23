@@ -3,6 +3,7 @@
 #include "Actions\AddConditional.h"
 #include "Actions\AddVariableAssign.h"
 #include "Actions\AddOperatorAssign.h"
+#include "Actions\SelectDeselect.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -63,8 +64,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			break;
 
 		case SELECT:
-			///create Select Action here
-
+			pAct = new SelectDeselect(this);
 			break;
 
 		case EXIT:
