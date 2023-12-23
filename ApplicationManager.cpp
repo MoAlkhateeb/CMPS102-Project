@@ -4,6 +4,10 @@
 #include "Actions\AddVariableAssign.h"
 #include "Actions\AddOperatorAssign.h"
 #include "Actions\SelectDeselect.h"
+#include "Actions\AddStart.h"
+#include "Actions\AddEnd.h"
+#include "Actions\AddWrite.h"
+#include "Actions\AddRead.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -16,6 +20,7 @@ ApplicationManager::ApplicationManager()
 	
 	StatCount = 0;
 	ConnCount = 0;
+	pSelectedConn = NULL;
 	pSelectedStat = NULL;	//no Statement is selected yet
 	pClipboard = NULL;
 	
@@ -61,6 +66,22 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 		case ADD_OPER_ASSIGN:
 			pAct = new AddOperatorAssign(this);
+			break;
+
+		case ADD_START:
+			pAct = new AddStart(this);
+			break;
+
+		case ADD_END:
+			pAct = new AddEnd(this);
+			break;
+
+		case ADD_READ:
+			pAct = new AddRead(this);
+			break;
+
+		case ADD_WRITE:
+			pAct = new AddWrite(this);
 			break;
 
 		case SELECT:
@@ -139,6 +160,19 @@ Statement *ApplicationManager::GetSelectedStatement() const
 //Set the statement selected by the user
 void ApplicationManager::SetSelectedStatement(Statement *pStat)
 {	pSelectedStat = pStat;	}
+
+
+Connector* ApplicationManager::GetSelectedConnector() const
+{
+	return pSelectedConn;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+//Set the statement selected by the user
+void ApplicationManager::SetSelectedConnector(Connector* pConn)
+{
+	pSelectedConn = pConn;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////
 //Returns the Clipboard

@@ -10,8 +10,6 @@ using namespace std;
 SelectDeselect::SelectDeselect(ApplicationManager* pAppManager) : Action(pAppManager) {
 	TargetStatement = nullptr;
 	TargetConnector = nullptr;
-
-	ReadActionParameters();
 }
 
 
@@ -29,22 +27,41 @@ void SelectDeselect::ReadActionParameters() {
 }
 
 void SelectDeselect::Execute() {
-
+	ReadActionParameters();
+	
 	if (TargetStatement) {
 		if (TargetStatement->IsSelected()) {
 			TargetStatement->SetSelected(false);
+			pManager->SetSelectedStatement(nullptr);
 		}
 		else {
+			if (pManager->GetSelectedConnector()) {
+				pManager->GetSelectedConnector()->SetSelected(false);
+				pManager->SetSelectedConnector(nullptr);
+			}
+			if (pManager->GetSelectedStatement()) {
+				pManager->GetSelectedStatement()->SetSelected(false);
+			}
 			TargetStatement->SetSelected(true);
+			pManager->SetSelectedStatement(TargetStatement);
 		}
 	}
 
 	if (TargetConnector) {
 		if (TargetConnector->IsSelected()) {
 			TargetConnector->SetSelected(false);
+			pManager->SetSelectedConnector(nullptr);
 		}
 		else {
+			if (pManager->GetSelectedConnector()) {
+				pManager->GetSelectedConnector()->SetSelected(false);
+			}
+			if (pManager->GetSelectedStatement()) {
+				pManager->GetSelectedStatement()->SetSelected(false);
+				pManager->SetSelectedStatement(nullptr);
+			}
 			TargetConnector->SetSelected(true);
+			pManager->SetSelectedConnector(TargetConnector);
 		}
 	}
 }
