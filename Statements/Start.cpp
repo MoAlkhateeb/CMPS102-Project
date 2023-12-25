@@ -27,3 +27,17 @@ bool Start::ClickOnStatement(Point click) const {
 	if (value <= 1) return true;
 	return false;
 }
+
+Point Start::GetInlet() const {
+	return Point(0, 0, false);
+}
+Point Start::GetOutlet() const {
+	return Outlet;
+}
+Point Start::GetFalseOutlet() const {
+	return Point(0, 0, false);
+}
+
+void Start::Save(ofstream& OutFile) {
+	OutFile << "START" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y << endl;
+}

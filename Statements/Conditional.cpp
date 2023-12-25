@@ -79,3 +79,17 @@ bool Conditional::ClickOnStatement(Point click) const {
 
 	return false;
 }
+
+Point Conditional::GetInlet() const {
+	return Inlet;
+}
+Point Conditional::GetOutlet() const {
+	return TrueOutlet;
+}
+Point Conditional::GetFalseOutlet() const {
+	return FalseOutlet;
+}
+
+void Conditional::Save(ofstream& OutFile) {
+	OutFile << "COND" << " " << ID << " " << TrueOutlet.x << " " << TrueOutlet.y  << " " << LHS << " " << OP << " " << RHS << endl;
+}

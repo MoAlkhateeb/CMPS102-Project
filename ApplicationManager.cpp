@@ -1,4 +1,5 @@
 #include "ApplicationManager.h"
+#include "Actions\AddConn.h"
 #include "Actions\AddValueAssign.h"
 #include "Actions\AddConditional.h"
 #include "Actions\AddVariableAssign.h"
@@ -8,6 +9,9 @@
 #include "Actions\AddEnd.h"
 #include "Actions\AddWrite.h"
 #include "Actions\AddRead.h"
+#include "Actions\Exit.h"
+#include "Actions\Copy.h"
+#include "Actions\Delete.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 
@@ -49,7 +53,7 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 {
 	Action* pAct = NULL;
 	
-	//According to ActioType, create the corresponding action object
+	//According to ActionType, create the corresponding action object
 	switch (ActType)
 	{
 		case ADD_VALUE_ASSIGN:
@@ -88,9 +92,20 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pAct = new SelectDeselect(this);
 			break;
 
+		case COPY:
+			pAct = new Copy(this);
+			break;
+
+		case ADD_CONNECTOR:
+			pAct = new AddConn(this);
+			break;
+
+		case DEL:
+			pAct = new Delete(this);
+			break;
+
 		case EXIT:
-			///create Exit Action here
-			
+			pAct = new Exit(this);
 			break;
 		
 		case STATUS:
@@ -147,7 +162,11 @@ void ApplicationManager::AddConnector(Connector* pConn) {
 }
 
 Connector* ApplicationManager::GetConnector(Point P) const {
-
+	for (int i = 0; i < ConnCount; i++) {
+		if (ConnList[i]->ClickOnConnector(P)) {
+			return ConnList[i];
+		}
+	}
 	return nullptr;
 }
 
@@ -213,13 +232,32 @@ Output *ApplicationManager::GetOutput() const
 {	return pOut; }
 ////////////////////////////////////////////////////////////////////////////////////
 
+void ApplicationManager::RemoveStatement(Statement* pStat) {
+	for (int i = 0; i < StatCount; i++) {
+		if (StatList[i] == pStat) {
+			StatList[i] = nullptr;
+			StatList[i] = StatList[StatCount - 1];
+			StatCount--;
+		}
+	}
+}
+void ApplicationManager::RemoveConnector(Connector* pConn) {
+	for (int i = 0; i < ConnCount; i++) {
+		if (ConnList[i] == pConn) {
+			ConnList[i] = nullptr;
+			ConnList[i] = ConnList[ConnCount - 1];
+			ConnCount--;
+		}
+	}
+}
+
 
 //Destructor
 ApplicationManager::~ApplicationManager()
 {
 	for(int i=0; i<StatCount; i++)
 		delete StatList[i];
-	for(int i=0; i<StatCount; i++)
+	for(int i=0; i<ConnCount; i++)
 		delete ConnList[i];
 	delete pIn;
 	delete pOut;

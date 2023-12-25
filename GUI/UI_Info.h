@@ -59,8 +59,15 @@ enum ArrowDirection {
 struct Point	
 {
 	int x,y;
-	Point(int a=0, int b=0)	//constructor
-	{ x=a;	y=b;	}
+	bool v;
+	Point(int a = 0, int b = 0, bool valid = true)	//constructor
+	{
+		x = a;	
+		y = b; 
+		v = valid;
+	}
+	void setValid(bool valid) { v = valid; }
+	bool IsValid() const { return v;  }
 };
 
 #endif

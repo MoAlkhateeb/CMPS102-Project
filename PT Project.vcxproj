@@ -125,8 +125,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actions\AddConditional.cpp" />
+    <ClCompile Include="Actions\AddConn.cpp" />
     <ClCompile Include="Actions\AddOperatorAssign.cpp" />
+    <ClCompile Include="Actions\AddRead.cpp" />
+    <ClCompile Include="Actions\AddStart.cpp" />
     <ClCompile Include="Actions\AddVariableAssign.cpp" />
+    <ClCompile Include="Actions\AddEnd.cpp" />
+    <ClCompile Include="Actions\AddWrite.cpp" />
+    <ClCompile Include="Actions\Copy.cpp" />
+    <ClCompile Include="Actions\Delete.cpp" />
+    <ClCompile Include="Actions\Exit.cpp" />
+    <ClCompile Include="Actions\Paste.cpp" />
     <ClCompile Include="Actions\SelectDeselect.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -294,8 +303,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actions\AddConditional.h" />
+    <ClInclude Include="Actions\AddConn.h" />
     <ClInclude Include="Actions\AddOperatorAssign.h" />
+    <ClInclude Include="Actions\AddRead.h" />
+    <ClInclude Include="Actions\AddStart.h" />
     <ClInclude Include="Actions\AddVariableAssign.h" />
+    <ClInclude Include="Actions\AddEnd.h" />
+    <ClInclude Include="Actions\AddWrite.h" />
+    <ClInclude Include="Actions\Copy.h" />
+    <ClInclude Include="Actions\Delete.h" />
+    <ClInclude Include="Actions\Exit.h" />
+    <ClInclude Include="Actions\Paste.h" />
     <ClInclude Include="Actions\SelectDeselect.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />

@@ -15,3 +15,6 @@ void Statement::SetSelected(bool s)
 bool Statement::IsSelected() const
 {	return Selected; }
 
+int Statement::GetID() const {
+	return ID;
+}

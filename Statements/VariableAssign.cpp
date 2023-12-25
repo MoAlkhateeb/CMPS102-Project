@@ -56,3 +56,18 @@ bool VariableAssign::ClickOnStatement(Point click) const
 
 	return true;
 }
+
+
+Point VariableAssign::GetOutlet() const {
+	return Outlet;
+}
+Point VariableAssign::GetFalseOutlet() const {
+	return Point(0, 0, false);
+}
+Point VariableAssign::GetInlet() const {
+	return Inlet;
+}
+
+void VariableAssign::Save(ofstream& OutFile) {
+	OutFile << "VAR_ASSIGN" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS << endl;
+}

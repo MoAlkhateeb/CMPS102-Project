@@ -22,7 +22,7 @@ private:
 	Statement *pSelectedStat; //a pointer to the last selected statement
 	                          //you can set and get this pointer
 	Connector* pSelectedConn;
-	Statement *pClipboard;    //a pointer to the last copied/cut statement
+	Statement* pClipboard;    //a pointer to the last copied/cut statement
 	                          //you can set and get this pointer
 
 	//Pointers to Input and Output classes
@@ -43,6 +43,8 @@ public:
 	Statement *GetStatement(Point P) const;	//Searches for a statement where point P belongs
 	                                        //TODO: Complete its implementation 
 	                                        //      WITHOUT breaking class responsibilities
+	void RemoveStatement(Statement* pStat);
+	void RemoveConnector(Connector* pConn);
 
 	void AddConnector(Connector* pConn);    //Adds a new Connector to the Flowchart
 	Connector *GetConnector(Point P) const;	//search for a Connector where point P belongs

@@ -26,4 +26,9 @@ public:
 	virtual void Draw(Output* pOut) const;
 
 	bool ClickOnStatement(Point click) const override;
+
+	virtual Point GetInlet() const;
+	virtual Point GetOutlet() const;
+	virtual Point GetFalseOutlet() const;
+	virtual void Save(ofstream& OutFile) override;
 };

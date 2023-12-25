@@ -3,53 +3,58 @@
 Write::Write(Point LCorner, string text) : Statement() {
 	pOutConn = nullptr;
 	Text = text;
-	LeftCorner = LCorner;
-	Inlet.x = LeftCorner.x + UI.WRITE_WDTH / 2;
-	Inlet.y = LeftCorner.y;
+
+	bottomLeft = LCorner;
+
+	topLeft.x = bottomLeft.x + UI.WRITE_WDTH / 4;
+	topLeft.y = bottomLeft.y - UI.WRITE_HI;
+	topRight.x = bottomLeft.x + UI.WRITE_WDTH + UI.WRITE_WDTH / 4;
+	topRight.y = topLeft.y;
+	bottomRight.x = bottomLeft.x + UI.WRITE_WDTH;
+	bottomRight.y = bottomLeft.y;
+
+	Inlet.x = topLeft.x + UI.WRITE_WDTH / 2;
+	Inlet.y = topLeft.y;
 
 	Outlet.x = Inlet.x;
-	Outlet.y = LeftCorner.y + UI.WRITE_HI;
+	Outlet.y = bottomLeft.y;
 }
 
 void Write::UpdateStatementText() {}
 
 void Write::Draw(Output* pOut) const {
-	pOut->DrawRead(LeftCorner, UI.WRITE_WDTH, UI.WRITE_HI, Text, Selected);
+	pOut->DrawWrite(bottomLeft, UI.WRITE_WDTH, UI.WRITE_HI, Text, Selected);
 }
-
 
 bool Write::ClickOnStatement(Point click) const {
 
-	if (click.y > LeftCorner.y || click.y < LeftCorner.y - UI.WRITE_HI) return false;
-	if (click.x < LeftCorner.x || click.x >(LeftCorner.x + UI.WRITE_WDTH)) return false;
-
-	// get parallelogram corners
-	Point topLeft;
-	Point topRight;
-	Point bottomLeft;
-	Point bottomRight;
-
-	bottomLeft.x = LeftCorner.x;
-	topLeft.x = LeftCorner.x + UI.WRITE_WDTH / 2;
-	topRight.x = LeftCorner.x + UI.WRITE_WDTH;
-	bottomRight.x = LeftCorner.x + UI.WRITE_WDTH / 2;
-	bottomLeft.y = LeftCorner.y;
-	topLeft.y = LeftCorner.y + UI.WRITE_HI / 2;
-	topRight.y = LeftCorner.y;
-	bottomRight.y = LeftCorner.y - UI.WRITE_HI / 2;
-
+	if (click.y > bottomLeft.y || click.y < topRight.y) return false;
+	if (click.x < bottomLeft.x || click.x > topRight.x) return false;
 
 	// left line
-	int gradient1 = (topLeft.y - bottomLeft.y) / (topLeft.x - bottomLeft.x);
-	int y1 = gradient1 * click.x + topLeft.y - gradient1 * topLeft.x;
+	double gradient = (topLeft.y - bottomLeft.y) / (double) (topLeft.x - bottomLeft.x);
+	double y1 = gradient * click.x + topLeft.y - gradient * topLeft.x;
 
 	if (click.y < y1) return false;
 
 	// right line
-	int gradient2 = (topRight.y - bottomRight.y) / (topRight.x - bottomRight.x);
-	int y2 = gradient2 * click.x + topRight.y - gradient2 * topRight.x;
+	double y2 = gradient * click.x + topRight.y - gradient * topRight.x;
 
-	if (click.y > y1) return false;
+	if (click.y > y2) return false;
 
 	return true;
+}
+
+Point Write::GetInlet() const {
+	return Inlet;
+}
+Point Write::GetFalseOutlet() const {
+	return Point(0, 0, false);
+}
+Point Write::GetOutlet() const {
+	return Outlet;
+}
+
+void Write::Save(ofstream& OutFile) {
+	OutFile << "WRITE" << " " << ID << " " << bottomLeft.x << " " << bottomLeft.y << " " << Text << " " << endl;
 }

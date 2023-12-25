@@ -34,7 +34,7 @@ public:
 	void SetSelected(bool s);
 	bool IsSelected() const;
 
-
+	bool ClickOnConnector(Point Click) const;
 };
 
 #endif

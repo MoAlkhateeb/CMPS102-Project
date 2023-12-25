@@ -28,3 +28,19 @@ bool End::ClickOnStatement(Point click) const {
 	if (value <= 1) return true;
 	return false;
 }
+
+
+Point End::GetInlet() const{
+	return Inlet;
+}
+Point End::GetOutlet() const {
+	return Point(0, 0, false);
+}
+
+Point End::GetFalseOutlet() const {
+	return Point(0, 0, false);
+}
+
+void End::Save(ofstream& OutFile) {
+	OutFile << "END" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y  << endl;
+}

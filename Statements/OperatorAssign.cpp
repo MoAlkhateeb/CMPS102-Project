@@ -56,3 +56,17 @@ bool OperatorAssign::ClickOnStatement(Point click) const {
 
 	return true;
 }
+
+Point OperatorAssign::GetInlet() const {
+	return Inlet;
+}
+Point OperatorAssign::GetOutlet() const {
+	return Outlet;
+}
+Point OperatorAssign::GetFalseOutlet() const {
+	return Point(0, 0, false);
+}
+
+void OperatorAssign::Save(ofstream& OutFile) {
+	OutFile << "OPER_ASSIGN" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS1 << " " << OP << " " << RHS2 << endl;
+}

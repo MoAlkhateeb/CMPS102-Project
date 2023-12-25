@@ -5,6 +5,7 @@
 #include "..\Connector.h"
 //class Output;
 #include "..\GUI\Output.h"
+#include <fstream>
 
 //Base class for all Statements
 class Statement
@@ -23,16 +24,17 @@ public:
 	Statement();
 	void SetSelected(bool s);
 	bool IsSelected() const;
-
+	
+	virtual int GetID() const;
 	virtual void Draw(Output* pOut) const = 0 ;	//Draw the statement
 	
-	
 
-	///TODO:The following functions should be supported by the Statement class
-	///		It should then be overridden by each derived Statement
-	///		Decide the parameters that you should pass to each function and its return type
+	virtual Point GetInlet() const = 0;
+	virtual Point GetOutlet() const = 0;
+	virtual Point GetFalseOutlet() const = 0;
 
-	//virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file
+	virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file
+
 	//virtual void Load(ifstream &Infile) = 0;	//Load the Statement parameters from a file
 
 	//virtual void Edit() = 0;		//Edit the Statement parameter

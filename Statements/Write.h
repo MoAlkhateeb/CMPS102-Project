@@ -8,7 +8,10 @@ class Write : public Statement {
 		Point Inlet;
 		Point Outlet;
 
-		Point LeftCorner;
+		Point bottomLeft;
+		Point bottomRight;
+		Point topLeft;
+		Point topRight;
 
 	protected:
 		virtual void UpdateStatementText() override;
@@ -17,4 +20,9 @@ class Write : public Statement {
 		Write(Point Left, string text = "");
 		virtual void Draw(Output* pOut) const override;
 		bool ClickOnStatement(Point click) const override;
+		
+		virtual Point GetInlet() const;
+		virtual Point GetOutlet() const;
+		virtual Point GetFalseOutlet() const;
+		virtual void Save(ofstream& OutFile) override;
 };

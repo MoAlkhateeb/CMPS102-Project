@@ -59,3 +59,17 @@ bool ValueAssign::ClickOnStatement(Point click) const {
 	
 	return true;
 }
+
+Point ValueAssign::GetInlet() const {
+	return Inlet;
+}
+Point ValueAssign::GetOutlet() const {
+	return Outlet;
+}
+Point ValueAssign::GetFalseOutlet() const {
+	return Point(0, 0, false);
+}
+
+void ValueAssign::Save(ofstream& OutFile) {
+	OutFile << "VAL_ASSIGN" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS << endl;
+}
