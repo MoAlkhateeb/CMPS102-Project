@@ -65,6 +65,8 @@ public:
 	Output *GetOutput() const;      //Return pointer to the output
 	void UpdateInterface() const;	//Redraws all the drawing window
 	
+	// == Save Function ==
+	void SaveAll(const string& filename) const;
 };
 
 #endif

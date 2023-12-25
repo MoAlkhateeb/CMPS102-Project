@@ -14,7 +14,7 @@
 #include "Actions\Delete.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
-
+using namespace std;
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -262,4 +262,28 @@ ApplicationManager::~ApplicationManager()
 	delete pIn;
 	delete pOut;
 	
+}
+//==================================================================================//
+//							SaveAll Functions							//
+//==================================================================================//
+
+void ApplicationManager::SaveAll(const string& filename) const{
+	ofstream outFile(filename);
+
+	if (!outFile.is_open()) {
+		pOut->PrintMessage("Error: could not open file " + filename);
+		return;
+	}
+	 //Save Statements 
+	outFile << StatCount << endl;
+	for (auto& stmt : StatList) {
+		stmt->Save(outFile);
+	}
+	//Save Connectors 
+	outFile << ConnCount << endl;
+	for (auto& conn : ConnList) {
+		conn->Save(outFile);
+	}
+	outFile.close();
+
 }
