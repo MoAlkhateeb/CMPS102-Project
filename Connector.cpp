@@ -1,4 +1,5 @@
 #include "Connector.h"
+#include "Statements/Statement.h"
 #include <fstream>
 
 Connector::Connector(Statement* Src, Statement* Dst)	
@@ -103,4 +104,10 @@ void Connector::SetSelected(bool s)
 bool Connector::IsSelected() const
 {
 	return Selected;
+}
+
+void Connector::Save(ofstream& outFile) const {
+	int outletBranch; // Yes = 1 , No = 2
+	outFile << SrcStat->GetID() << " " << DstStat->GetID() << " " << outletBranch << endl;
+	
 }

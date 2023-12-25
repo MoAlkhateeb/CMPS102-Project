@@ -3,6 +3,7 @@
 
 #include "GUI\UI_Info.h"
 #include "GUI\output.h"
+using namespace std;
 class Statement;
 
 class Connector	//a connector that connects two statements (Source & Destination)
@@ -14,6 +15,8 @@ private:
 	Point End;		//End point of the connector
 
 	bool Selected;
+
+	int ID;
 
 public:
 	Connector(Statement* Src, Statement* Dst);
@@ -35,6 +38,8 @@ public:
 	bool IsSelected() const;
 
 	bool ClickOnConnector(Point Click) const;
+
+	void Save(ofstream& outFile) const;
 };
 
 #endif
