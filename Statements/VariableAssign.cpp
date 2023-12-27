@@ -5,6 +5,8 @@ using namespace std;
 
 VariableAssign::VariableAssign(Point Lcorner, string LeftVar, string RightVar)
 {
+
+	Type = VAR_ASSIGN;
 	LHS = LeftVar;
 	RHS = RightVar;
 
@@ -57,15 +59,8 @@ bool VariableAssign::ClickOnStatement(Point click) const
 	return true;
 }
 
-
-Point VariableAssign::GetOutlet() const {
-	return Outlet;
-}
 Point VariableAssign::GetFalseOutlet() const {
 	return Point(0, 0, false);
-}
-Point VariableAssign::GetInlet() const {
-	return Inlet;
 }
 
 void VariableAssign::Save(ofstream& OutFile) {

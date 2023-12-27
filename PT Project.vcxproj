@@ -136,7 +136,11 @@
     <ClCompile Include="Actions\Delete.cpp" />
     <ClCompile Include="Actions\Exit.cpp" />
     <ClCompile Include="Actions\Paste.cpp" />
+    <ClCompile Include="Actions\SaveAction.cpp" />
     <ClCompile Include="Actions\SelectDeselect.cpp" />
+    <ClCompile Include="Actions\SwitchDesign.cpp" />
+    <ClCompile Include="Actions\SwitchSimulation.cpp" />
+    <ClCompile Include="Actions\Validate.cpp" />
     <ClCompile Include="CMUgraphicsLib\auxil.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -314,7 +318,11 @@
     <ClInclude Include="Actions\Delete.h" />
     <ClInclude Include="Actions\Exit.h" />
     <ClInclude Include="Actions\Paste.h" />
+    <ClInclude Include="Actions\SaveAction.h" />
     <ClInclude Include="Actions\SelectDeselect.h" />
+    <ClInclude Include="Actions\SwitchDesign.h" />
+    <ClInclude Include="Actions\SwitchSimulation.h" />
+    <ClInclude Include="Actions\Validate.h" />
     <ClInclude Include="CMUgraphicsLib\auxil.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
     <ClInclude Include="CMUgraphicsLib\colors.h" />

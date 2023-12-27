@@ -1,6 +1,8 @@
 #include "Write.h"
 
 Write::Write(Point LCorner, string text) : Statement() {
+
+	Type = WRITE;
 	pOutConn = nullptr;
 	Text = text;
 
@@ -45,14 +47,8 @@ bool Write::ClickOnStatement(Point click) const {
 	return true;
 }
 
-Point Write::GetInlet() const {
-	return Inlet;
-}
 Point Write::GetFalseOutlet() const {
 	return Point(0, 0, false);
-}
-Point Write::GetOutlet() const {
-	return Outlet;
 }
 
 void Write::Save(ofstream& OutFile) {

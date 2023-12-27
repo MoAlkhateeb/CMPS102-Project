@@ -89,10 +89,10 @@ void Output::CreateDesignToolBar() //Draws the Design Menu
 	MenuItemImages[ITM_LOAD] = "images\\load.jpg";
 	MenuItemImages[ITM_SAVE] = "images\\save.jpg";
 	MenuItemImages[ITM_SELECT] = "images\\select.jpg";
-	MenuItemImages[ITM_EDIT] = "images\\edit.jpg";
-	MenuItemImages[ITM_COPY] = "images\\copy.jpg";
-	MenuItemImages[ITM_CUT] = "images\\cut.jpg";
-	MenuItemImages[ITM_PASTE] = "images\\paste.jpg";
+	//MenuItemImages[ITM_EDIT] = "images\\edit.jpg";
+	//MenuItemImages[ITM_COPY] = "images\\copy.jpg";
+	//MenuItemImages[ITM_CUT] = "images\\cut.jpg";
+	//MenuItemImages[ITM_PASTE] = "images\\paste.jpg";
 	MenuItemImages[ITM_DELETE] = "images\\delete.jpg";
 	MenuItemImages[ITM_START] = "images\\start.jpg";
 	MenuItemImages[ITM_END] = "images\\end.jpg";

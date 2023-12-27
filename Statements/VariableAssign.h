@@ -10,10 +10,7 @@ private:
 
 	Connector* pOutConn;
 
-	Point Inlet;
-	Point Outlet;
-
-	Point LeftCorner;	//left corenr of the statement block.
+	Point LeftCorner;	//left corner of the statement block.
 
 	virtual void UpdateStatementText() override;
 
@@ -27,8 +24,6 @@ public:
 
 	bool ClickOnStatement(Point click) const override;
 
-	virtual Point GetInlet() const;
-	virtual Point GetOutlet() const;
-	virtual Point GetFalseOutlet() const;
+	virtual Point GetFalseOutlet() const override;
 	virtual void Save(ofstream& OutFile) override;
 };

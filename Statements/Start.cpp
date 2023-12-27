@@ -2,7 +2,8 @@
 
 void Start::UpdateStatementText() {}
 
-Start::Start(Point Left) : Statement(){
+Start::Start(Point Left) : Statement() {
+	Type = START;
 	pOutConn = nullptr;
 	LeftCorner = Left;
 	Outlet.x = LeftCorner.x + UI.START_WDTH / 2;
@@ -30,9 +31,6 @@ bool Start::ClickOnStatement(Point click) const {
 
 Point Start::GetInlet() const {
 	return Point(0, 0, false);
-}
-Point Start::GetOutlet() const {
-	return Outlet;
 }
 Point Start::GetFalseOutlet() const {
 	return Point(0, 0, false);

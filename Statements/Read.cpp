@@ -1,6 +1,7 @@
 #include "Read.h"
 
 Read::Read(Point LCorner, string text): Statement() {
+	Type = READ;
 	pOutConn = nullptr;
 	Text = text;
 
@@ -45,13 +46,6 @@ bool Read::ClickOnStatement(Point click) const {
 	return true;
 }
 
-
-Point Read::GetInlet() const {
-	return Inlet;
-}
-Point Read::GetOutlet() const {
-	return Outlet;
-}
 Point Read::GetFalseOutlet() const {
 	return Point(0, 0, false);
 }

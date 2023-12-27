@@ -5,9 +5,6 @@ class Write : public Statement {
 	private:
 		Connector* pOutConn;
 
-		Point Inlet;
-		Point Outlet;
-
 		Point bottomLeft;
 		Point bottomRight;
 		Point topLeft;
@@ -18,11 +15,8 @@ class Write : public Statement {
 
 	public:
 		Write(Point Left, string text = "");
+		virtual Point GetFalseOutlet() const override;
 		virtual void Draw(Output* pOut) const override;
 		bool ClickOnStatement(Point click) const override;
-		
-		virtual Point GetInlet() const;
-		virtual Point GetOutlet() const;
-		virtual Point GetFalseOutlet() const;
 		virtual void Save(ofstream& OutFile) override;
 };

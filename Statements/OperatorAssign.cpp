@@ -6,6 +6,7 @@ using namespace std;
 
 OperatorAssign::OperatorAssign(Point Lcorner, const string& LeftHs, const string& RightHs1, const string& RightHs2, const string& Operator) {
 
+	Type = OP_ASSIGN;
 	LHS = LeftHs;
 	RHS1 = RightHs1;
 	RHS2 = RightHs2;
@@ -57,12 +58,6 @@ bool OperatorAssign::ClickOnStatement(Point click) const {
 	return true;
 }
 
-Point OperatorAssign::GetInlet() const {
-	return Inlet;
-}
-Point OperatorAssign::GetOutlet() const {
-	return Outlet;
-}
 Point OperatorAssign::GetFalseOutlet() const {
 	return Point(0, 0, false);
 }

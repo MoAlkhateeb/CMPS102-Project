@@ -13,8 +13,6 @@ private:
 
 	Connector* pOutConn;
 
-	Point Inlet; // A point where connections enter the statement
-	Point Outlet; // A point where connections leaves the statement
 	Point LeftCorner; // Left corner of the statment block
 
 	virtual void UpdateStatementText() override;
@@ -30,8 +28,6 @@ public:
 
 	bool ClickOnStatement(Point click) const override;
 
-	virtual Point GetInlet() const;
-	virtual Point GetOutlet() const;
-	virtual Point GetFalseOutlet() const;
-	void OperatorAssign::Save(ofstream& OutFile);
+	virtual Point GetFalseOutlet() const override;
+	void Save(ofstream& OutFile);
 };

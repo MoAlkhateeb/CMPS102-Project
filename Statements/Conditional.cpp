@@ -9,6 +9,7 @@ void Conditional::UpdateStatementText() {
 
 
 Conditional::Conditional(Point Lcorner, string LeftHS, string Operator, string RightHS): Statement() {
+	Type = COND;
 	pOutConn = nullptr;
 
 	LHS = LeftHS;
@@ -19,15 +20,15 @@ Conditional::Conditional(Point Lcorner, string LeftHS, string Operator, string R
 
 
 	// left corner
-	TrueOutlet = Lcorner;
+	Outlet = Lcorner;
 
 	// top corner
-	Inlet.x = TrueOutlet.x + UI.CONDITION_WDTH / 2;
-	Inlet.y = TrueOutlet.y - UI.CONDITION_HI / 2;
+	Inlet.x = Outlet.x + UI.CONDITION_WDTH / 2;
+	Inlet.y = Outlet.y - UI.CONDITION_HI / 2;
 
 	// right corner
-	FalseOutlet.x = TrueOutlet.x + UI.CONDITION_WDTH;
-	FalseOutlet.y = TrueOutlet.y;
+	FalseOutlet.x = Outlet.x + UI.CONDITION_WDTH;
+	FalseOutlet.y = Outlet.y;
 
 }
 
@@ -44,7 +45,7 @@ void Conditional::setRHS(const string& R) {
 	UpdateStatementText();
 }
 void Conditional::Draw(Output* pOut) const {
-	pOut->DrawConditionalStat(TrueOutlet, UI.CONDITION_WDTH, UI.CONDITION_HI, Text, Selected);
+	pOut->DrawConditionalStat(Outlet, UI.CONDITION_WDTH, UI.CONDITION_HI, Text, Selected);
 }
 
 bool Conditional::ClickOnStatement(Point click) const {
@@ -56,16 +57,16 @@ bool Conditional::ClickOnStatement(Point click) const {
 	bottom.x = Inlet.x;
 	bottom.y = Inlet.y + UI.CONDITION_HI;
 	
-	if (click.x < TrueOutlet.x || click.x > FalseOutlet.x) return false;
+	if (click.x < Outlet.x || click.x > FalseOutlet.x) return false;
 	if (click.y < Inlet.y || click.y > bottom.y) return false;
 
-	double gradient = (Inlet.y - TrueOutlet.y) / (double)(Inlet.x - TrueOutlet.x);
+	double gradient = (Inlet.y - Outlet.y) / (double)(Inlet.x - Outlet.x);
 	
 	// top left line
-	int y1 = gradient * (click.x - TrueOutlet.x) + TrueOutlet.y;
+	int y1 = gradient * (click.x - Outlet.x) + Outlet.y;
 	
 	// bottom left
-	int y3 = -gradient * (click.x - TrueOutlet.x) + TrueOutlet.y;
+	int y3 = -gradient * (click.x - Outlet.x) + Outlet.y;
 
 	// top right line
 	int y2 = -gradient * (click.x - FalseOutlet.x) + FalseOutlet.y;
@@ -80,16 +81,6 @@ bool Conditional::ClickOnStatement(Point click) const {
 	return false;
 }
 
-Point Conditional::GetInlet() const {
-	return Inlet;
-}
-Point Conditional::GetOutlet() const {
-	return TrueOutlet;
-}
-Point Conditional::GetFalseOutlet() const {
-	return FalseOutlet;
-}
-
 void Conditional::Save(ofstream& OutFile) {
-	OutFile << "COND" << " " << ID << " " << TrueOutlet.x << " " << TrueOutlet.y  << " " << LHS << " " << OP << " " << RHS << endl;
+	OutFile << "COND" << " " << ID << " " << Outlet.x << " " << Outlet.y  << " " << LHS << " " << OP << " " << RHS << endl;
 }

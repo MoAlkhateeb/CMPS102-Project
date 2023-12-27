@@ -68,6 +68,9 @@ struct Point
 	}
 	void setValid(bool valid) { v = valid; }
 	bool IsValid() const { return v;  }
+	bool operator==(const Point& other) {
+		return other.x == this->x && other.y == this->y && this->IsValid() && other.IsValid();
+	}
 };
 
 #endif

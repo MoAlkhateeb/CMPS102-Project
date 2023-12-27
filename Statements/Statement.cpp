@@ -18,3 +18,16 @@ bool Statement::IsSelected() const
 int Statement::GetID() const {
 	return ID;
 }
+Point Statement::GetInlet() const {
+	return Inlet;
+}
+Point Statement::GetOutlet() const {
+	return Outlet;
+}
+Point Statement::GetFalseOutlet() const {
+	return FalseOutlet;
+}
+
+STAT_TYPE Statement::getType() const {
+	return Type;
+}

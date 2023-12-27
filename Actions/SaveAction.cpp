@@ -3,26 +3,30 @@
 #include "../GUI/Input.h"
 #include "../GUI/Output.h"
 #include <iostream>
-#include <fstream>
 
 SaveAction::SaveAction(ApplicationManager* pAppManager):Action(pAppManager){}
 
-void SaveAction::Execute() {
+
+void SaveAction::ReadActionParameters() {
 	Input* pIn = pManager->GetInput();
 	Output* pOut = pManager->GetOutput();
 
 	pOut->PrintMessage("Enter the filename to save: ");
-	string filename = pIn->GetString(pOut) + ".txt"; // Assuming a text file format
-	
-	ofstream outFile;
-	outFile.open(filename);
+	filename = pIn->GetString(pOut);
+	int length = filename.length();
 
-	if (outFile.is_open()) {
-		pManager->SaveAll(filename);
-		outFile.close();
-		pOut->PrintMessage("Flowchart saved successfully to " + filename);
+	string suffix = filename.substr(length - 4, length - 1);
+	cout << suffix << endl;
+	for (int i = 0; i < suffix.length(); i++) {
+		suffix[i] = tolower(suffix[i]);
 	}
-	else {
-		pOut->PrintMessage("Error: Could not open file " + filename);
+
+	if (suffix != ".txt") {
+		filename += ".txt";
 	}
+}
+
+void SaveAction::Execute() {
+	ReadActionParameters();
+	pManager->SaveAll(filename);
 }

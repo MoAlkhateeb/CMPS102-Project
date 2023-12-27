@@ -107,7 +107,18 @@ bool Connector::IsSelected() const
 }
 
 void Connector::Save(ofstream& outFile) const {
-	int outletBranch; // Yes = 1 , No = 2
+	int outletBranch = 0; // Yes = 1 , No = 2
+	Point FalseOutlet = SrcStat->GetFalseOutlet();
+	if (SrcStat->getType() == COND) {
+		if (FalseOutlet == Start)
+			outletBranch = 2;
+		else
+			outletBranch = 1;
+	}
+	else {
+		outletBranch = 0;
+	}
+
 	outFile << SrcStat->GetID() << " " << DstStat->GetID() << " " << outletBranch << endl;
 	
 }

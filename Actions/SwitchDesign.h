@@ -1,13 +1,9 @@
 #pragma once
 #include "Action.h"
 
-class SaveAction : public Action {
-
-private:
-	string filename;
-
+class SwitchDesign : public Action {
 public:
-	SaveAction(ApplicationManager* pAppManager);
+	SwitchDesign(ApplicationManager* pAppManager);
 	virtual void ReadActionParameters() override;
 	virtual void Execute() override;
 };

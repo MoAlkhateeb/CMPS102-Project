@@ -41,13 +41,16 @@ public:
 	// == Statements/Connector Management Functions ==
 	void AddStatement(Statement* pStat);    //Adds a new Statement to the Flowchart
 	Statement *GetStatement(Point P) const;	//Searches for a statement where point P belongs
-	                                        //TODO: Complete its implementation 
+	Statement* GetStatement(int ID) const;
+	
+	//TODO: Complete its implementation 
 	                                        //      WITHOUT breaking class responsibilities
 	void RemoveStatement(Statement* pStat);
 	void RemoveConnector(Connector* pConn);
 
 	void AddConnector(Connector* pConn);    //Adds a new Connector to the Flowchart
 	Connector *GetConnector(Point P) const;	//search for a Connector where point P belongs
+	int GetConnectorCount(Point P) const;
 
 	// Note: you should use the following 4 functions 
 	//       in order not to break class responsibilities (especially in copy, cut and paste)
@@ -67,6 +70,7 @@ public:
 	
 	// == Save Function ==
 	void SaveAll(const string& filename) const;
+	bool ApplicationManager::ValidateAll() const;
 };
 
 #endif

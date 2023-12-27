@@ -3,6 +3,7 @@
 void End::UpdateStatementText() {}
 
 End::End(Point Left) : Statement() {
+	Type = END;
 	pInConn = nullptr;
 	LeftCorner = Left;
 	Inlet.x = LeftCorner.x + UI.END_WDTH / 2;
@@ -29,10 +30,6 @@ bool End::ClickOnStatement(Point click) const {
 	return false;
 }
 
-
-Point End::GetInlet() const{
-	return Inlet;
-}
 Point End::GetOutlet() const {
 	return Point(0, 0, false);
 }

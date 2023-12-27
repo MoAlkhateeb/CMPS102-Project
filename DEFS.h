@@ -61,10 +61,11 @@ enum DesignMenuItem //The items of the design menu --> THE ORDER MATTERS
 
 	ITM_SELECT,
 
-	ITM_EDIT,
-	ITM_COPY,
-	ITM_CUT,
-	ITM_PASTE,
+	//ITM_EDIT,
+	//ITM_COPY,
+	//ITM_CUT,
+	//ITM_PASTE,
+	
 	ITM_DELETE,
 
 	ITM_START, 

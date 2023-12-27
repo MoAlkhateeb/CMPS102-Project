@@ -12,9 +12,16 @@
 #include "Actions\Exit.h"
 #include "Actions\Copy.h"
 #include "Actions\Delete.h"
+#include "Actions\SaveAction.h"
+#include "Actions\SwitchSimulation.h"
+#include "Actions\SwitchDesign.h"
+#include "Actions\Validate.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
+#include <set>
+
 using namespace std;
+
 //Constructor
 ApplicationManager::ApplicationManager()
 {
@@ -100,8 +107,24 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pAct = new AddConn(this);
 			break;
 
+		case SAVE:
+			pAct = new SaveAction(this);
+			break;
+
 		case DEL:
 			pAct = new Delete(this);
+			break;
+
+		case SWITCH_SIM_MODE:
+			pAct = new SwitchSimulation(this);
+			break;
+
+		case SWITCH_DSN_MODE:
+			pAct = new SwitchDesign(this);
+			break;
+
+		case VALIDATE_FLOWCHART:
+			pAct = new Validate(this);
 			break;
 
 		case EXIT:
@@ -154,6 +177,13 @@ Statement *ApplicationManager::GetStatement(Point P) const
 	return nullptr;
 }
 
+Statement* ApplicationManager::GetStatement(int ID) const {
+	for (int i = 0; i < StatCount; i++) {
+		if (StatList[i]->GetID() == ID) {
+			return StatList[i];
+		}
+	}
+}
 
 void ApplicationManager::AddConnector(Connector* pConn) {
 	if (ConnCount < MaxCount)
@@ -170,6 +200,15 @@ Connector* ApplicationManager::GetConnector(Point P) const {
 	return nullptr;
 }
 
+int ApplicationManager::GetConnectorCount(Point P) const {
+	int count = 0;
+	for (int i = 0; i < ConnCount; i++) {
+		if (ConnList[i]->ClickOnConnector(P)) {
+			count++;
+		}
+	}
+	return count;
+}
 ////////////////////////////////////////////////////////////////////////////////////
 //Returns the selected statement
 Statement *ApplicationManager::GetSelectedStatement() const
@@ -271,19 +310,91 @@ void ApplicationManager::SaveAll(const string& filename) const{
 	ofstream outFile(filename);
 
 	if (!outFile.is_open()) {
-		pOut->PrintMessage("Error: could not open file " + filename);
+		pOut->PrintMessage("Error: Could not open file " + filename);
 		return;
 	}
+
 	 //Save Statements 
 	outFile << StatCount << endl;
-	for (auto& stmt : StatList) {
-		stmt->Save(outFile);
+	for (int i = 0; i < StatCount; i++) {
+		StatList[i]->Save(outFile);
 	}
 	//Save Connectors 
 	outFile << ConnCount << endl;
-	for (auto& conn : ConnList) {
-		conn->Save(outFile);
+	for (int i = 0; i < ConnCount; i++) {
+		ConnList[i]->Save(outFile);
 	}
 	outFile.close();
 
+}
+
+
+bool ApplicationManager::ValidateAll() const {
+
+	// Check number of end and start statements
+	int countEnd = 0;
+	int countStart = 0;
+
+	for (int i = 0; i < StatCount; i++) {
+		Statement* stat = StatList[i];
+		if (stat->GetInlet().IsValid() && !stat->GetOutlet().IsValid())
+			countEnd++;
+		else if (!stat->GetInlet().IsValid() && stat->GetOutlet().IsValid())
+			countStart++;
+	}
+
+	if (countStart != 1 || countEnd != 1) {
+		pOut->PrintMessage("Your flowchart must have one start and one end.");
+		return false;
+	}
+
+
+	Statement* start;
+	Statement* end;
+
+	// check that chart has the correct num of connectors
+	bool InvalidConnectors = false;
+	for (int i = 0; i < StatCount; i++) {
+		Statement* stat = StatList[i];
+		Point In = stat->GetInlet();
+		Point Out = stat->GetOutlet();
+		Point FOut = stat->GetFalseOutlet();
+
+		// conditional
+		if (In.IsValid() && Out.IsValid() && FOut.IsValid()) {
+			if (GetConnectorCount(Out) != 1 || GetConnectorCount(FOut) != 1 || GetConnectorCount(In) < 1) {
+				InvalidConnectors = true;
+			}
+		}
+
+		// normal statement (but not start or end)
+		else if (In.IsValid() && Out.IsValid()) {
+			if (GetConnectorCount(Out) != 1 || GetConnectorCount(In) < 1) {
+				InvalidConnectors = true;
+			}
+		}
+
+		// end statement
+		else if (In.IsValid()) {
+			end = stat;
+			if (GetConnectorCount(In) < 1) {
+				InvalidConnectors = true;
+			}
+		}
+		
+		// start 
+		else if (Out.IsValid()) {
+			start = stat;
+			if (GetConnectorCount(Out) != 1) {
+				InvalidConnectors = true;
+			}
+		}
+
+		if (InvalidConnectors) {
+			pOut->PrintMessage("The chart doesn't have the correct number of connectors");
+			return false;
+		}
+	}
+	
+	return true;
 }

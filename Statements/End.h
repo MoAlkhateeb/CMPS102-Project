@@ -4,7 +4,6 @@
 
 class End : public Statement {
 private:
-	Point Inlet;
 	Point LeftCorner;	//left corenr of the statement block.
 	Connector* pInConn;
 
@@ -16,8 +15,7 @@ public:
 	virtual void Draw(Output* pOut) const override;
 	bool ClickOnStatement(Point click) const override;
 
-	virtual Point GetInlet() const;
-	virtual Point GetOutlet() const;
-	virtual Point GetFalseOutlet() const;
+	virtual Point GetOutlet() const override;
+	virtual Point GetFalseOutlet() const override;
 	virtual void Save(ofstream& OutFile) override;
 };

@@ -5,8 +5,8 @@ using namespace std;
 
 ValueAssign::ValueAssign(Point Lcorner, string LeftHS, double RightHS) : Statement()
 {
-	// Note: The LeftHS and RightHS should be validated inside (AddValueAssign) action
-	//       before passing it to the constructor of ValueAssign
+	Type = VAL_ASSIGN;
+
 	LHS = LeftHS;
 	RHS = RightHS;
 
@@ -60,12 +60,6 @@ bool ValueAssign::ClickOnStatement(Point click) const {
 	return true;
 }
 
-Point ValueAssign::GetInlet() const {
-	return Inlet;
-}
-Point ValueAssign::GetOutlet() const {
-	return Outlet;
-}
 Point ValueAssign::GetFalseOutlet() const {
 	return Point(0, 0, false);
 }

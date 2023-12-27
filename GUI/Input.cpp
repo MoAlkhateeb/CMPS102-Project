@@ -108,10 +108,10 @@ ActionType Input::GetUserAction() const
 			case ITM_LOAD: return LOAD;
 			case ITM_SAVE: return SAVE;
 			case ITM_SELECT: return SELECT;
-			case ITM_EDIT: return EDIT_STAT;
-			case ITM_COPY: return COPY;
-			case ITM_CUT: return CUT;
-			case ITM_PASTE: return PASTE;
+			//case ITM_EDIT: return EDIT_STAT;
+			//case ITM_COPY: return COPY;
+			//case ITM_CUT: return CUT;
+			//case ITM_PASTE: return PASTE;
 			case ITM_DELETE: return DEL;
 			case ITM_START: return ADD_START;
 			case ITM_END: return ADD_END;
