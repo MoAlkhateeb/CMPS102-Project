@@ -203,9 +203,6 @@
     <ClCompile Include="Actions\Exit.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Actions\Copy.cpp">
-      <Filter>Action Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Actions\Paste.cpp" />
     <ClCompile Include="Actions\AddConn.cpp">
       <Filter>Action Classes</Filter>
@@ -223,6 +220,9 @@
       <Filter>Action Classes</Filter>
     </ClCompile>
     <ClCompile Include="Actions\Validate.cpp">
+      <Filter>Action Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions\Run.cpp">
       <Filter>Action Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -364,9 +364,6 @@
     <ClInclude Include="Actions\Exit.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Actions\Copy.h">
-      <Filter>Action Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Actions\Paste.h" />
     <ClInclude Include="Actions\AddConn.h">
       <Filter>Action Classes</Filter>
@@ -384,6 +381,9 @@
       <Filter>Action Classes</Filter>
     </ClInclude>
     <ClInclude Include="Actions\Validate.h">
+      <Filter>Action Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Actions\Run.h">
       <Filter>Action Classes</Filter>
     </ClInclude>
   </ItemGroup>

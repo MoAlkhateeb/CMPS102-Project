@@ -10,12 +10,12 @@
 #include "Actions\AddWrite.h"
 #include "Actions\AddRead.h"
 #include "Actions\Exit.h"
-#include "Actions\Copy.h"
 #include "Actions\Delete.h"
 #include "Actions\SaveAction.h"
 #include "Actions\SwitchSimulation.h"
 #include "Actions\SwitchDesign.h"
 #include "Actions\Validate.h"
+#include "Actions\Run.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
 #include "Statements\ValueAssign.h"
@@ -27,6 +27,7 @@
 #include "Statements\Start.h"
 #include "Statements\Conditional.h"
 #include <set>
+#include <unordered_map>
 #include <sstream>
 
 using namespace std;
@@ -108,10 +109,6 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 			pAct = new SelectDeselect(this);
 			break;
 
-		case COPY:
-			pAct = new Copy(this);
-			break;
-
 		case ADD_CONNECTOR:
 			pAct = new AddConn(this);
 			break;
@@ -134,6 +131,10 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 		case VALIDATE_FLOWCHART:
 			pAct = new Validate(this);
+			break;
+
+		case RUN_SIM:
+			pAct = new Run(this);
 			break;
 
 		case EXIT:
@@ -498,4 +499,120 @@ bool ApplicationManager::ValidateAll() const {
 	}
 
 	return true;
+}
+ 
+void ApplicationManager::ExecuteFlowchart() {
+	unordered_map<string, double> variables;
+	
+	// get start and end
+	Statement* start = nullptr;
+	Statement* end = nullptr;
+
+	for (int i = 0; i < StatCount; i++) {
+		if (StatList[i]->getType() == START) {
+			start = StatList[i];
+		}
+		else if (StatList[i]->getType() == END) {
+			end = StatList[i];
+		}
+		else if (start && end) {
+			break;
+		}
+	}
+
+	// traverse and execute
+	Statement* current = GetConnector(start->GetOutlet())->getDstStat();
+
+	// trivial flowchart
+	if (current->getType() == END) return;
+
+	bool TrueOutlet = false;
+	while (true) {
+		if (dynamic_cast<ValueAssign*>(current)) {
+			ValueAssign* valAssign = dynamic_cast<ValueAssign*>(current);
+			variables[valAssign->getLHS()] = valAssign->getRHS();
+		}
+		else if (dynamic_cast<Conditional*>(current)) {
+			Conditional* conditional = dynamic_cast<Conditional*>(current);
+			string LHS = conditional->getLHS();
+			string RHS = conditional->getRHS();
+			string OP = conditional->getOperator();
+
+			double val1, val2;
+
+			if (ValueOrVariable(LHS) == VARIABLE_OP) val1 = variables[LHS];
+			else val1 = stod(LHS);
+
+			if (ValueOrVariable(RHS) == VARIABLE_OP) val2 = variables[RHS];
+			else val2 = stod(RHS);
+
+			if (OP == "==") TrueOutlet = val1 == val2;
+			else if (OP == ">") TrueOutlet = val1 > val2;
+			else if (OP == "<") TrueOutlet = val1 < val2;
+			else if (OP == ">=") TrueOutlet = val1 >= val2;
+			else if (OP == "<=") TrueOutlet = val1 <= val2;
+		}
+
+		else if (dynamic_cast<VariableAssign*>(current)) {
+			VariableAssign* varAssign = dynamic_cast<VariableAssign*>(current);
+			string LHS = varAssign->getLHS();
+			string RHS = varAssign->getRHS();
+			variables[LHS] = variables[RHS];
+		}
+
+		else if (dynamic_cast<OperatorAssign*>(current)) {
+			OperatorAssign* opAssign = dynamic_cast<OperatorAssign*>(current);
+			string LHS = opAssign->getLHS();
+			string RHS1 = opAssign->getRHS1();
+			string RHS2 = opAssign->getRHS2();
+			string OP = opAssign->getOP();
+
+			double val1, val2;
+			if (ValueOrVariable(RHS1) == VARIABLE_OP) val1 = variables[RHS1];
+			else val1 = stod(RHS1);
+
+			if (ValueOrVariable(RHS2) == VARIABLE_OP) val2 = variables[RHS2];
+			else val2 = stod(RHS2);
+
+			switch (OP[0]) {
+			case '+':
+				variables[LHS] = val1 + val2;
+				break;
+			case '-':
+				variables[LHS] = val1 - val2;
+				break;
+			case '*':
+				variables[LHS] = val1 * val2;
+				break;
+			case '/':
+				variables[LHS] = val1 / val2;
+				break;
+			}
+		}
+
+		else if (current->getType() == READ) {
+			variables[current->getText()] = pIn->GetValue(pOut);
+		}
+
+		else if (current->getType() == WRITE) {
+			pOut->PrintMessage(std::to_string(variables[current->getText()]));
+		}
+
+
+		if (current->getType() == COND) {
+			if (TrueOutlet)
+				current = GetConnector(current->GetOutlet())->getDstStat();
+			else 
+				current = GetConnector(current->GetFalseOutlet())->getDstStat();
+
+			TrueOutlet = false;
+		}
+		else {
+			current = GetConnector(current->GetOutlet())->getDstStat();
+		}
+
+		if (current->getType() == END) {
+			return;
+		}
+	}
 }

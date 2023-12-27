@@ -39,18 +39,18 @@ public:
 	void ExecuteAction(ActionType) ;  //Creates an action and executes it
 	
 	// == Statements/Connector Management Functions ==
-	void AddStatement(Statement* pStat);    //Adds a new Statement to the Flowchart
-	Statement *GetStatement(Point P) const;	//Searches for a statement where point P belongs
-	Statement* GetStatement(int ID) const;
+	void AddStatement(Statement* pStat);    //Adds a new Statement to the Flowchart // MoAlkhateeb
+	Statement *GetStatement(Point P) const;	//Searches for a statement where point P belongs // MoAlkhateeb
+	Statement* GetStatement(int ID) const; // MoAlkhateeb
 	
 	//TODO: Complete its implementation 
 	                                        //      WITHOUT breaking class responsibilities
-	void RemoveStatement(Statement* pStat);
-	void RemoveConnector(Connector* pConn);
+	void RemoveStatement(Statement* pStat); // MoAlkhateeb
+	void RemoveConnector(Connector* pConn); // Omar
 
-	void AddConnector(Connector* pConn);    //Adds a new Connector to the Flowchart
-	Connector *GetConnector(Point P) const;	//search for a Connector where point P belongs
-	int GetConnectorCount(Point P) const;
+	void AddConnector(Connector* pConn);    // Adds a new Connector to the Flowchart // Omar
+	Connector *GetConnector(Point P) const;	// search for a Connector where point P belongs // Omar
+	int GetConnectorCount(Point P) const; // Zeena
 
 	// Note: you should use the following 4 functions 
 	//       in order not to break class responsibilities (especially in copy, cut and paste)
@@ -69,8 +69,9 @@ public:
 	void UpdateInterface() const;	//Redraws all the drawing window
 	
 	// == Save Function ==
-	void SaveAll(const string& filename) const;
-	bool ApplicationManager::ValidateAll() const;
+	void SaveAll(const string& filename) const; // Omar
+	bool ApplicationManager::ValidateAll() const; // Zeena
+	void ApplicationManager::ExecuteFlowchart(); // MoAlkhateeb
 };
 
 #endif

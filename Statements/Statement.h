@@ -7,7 +7,6 @@
 #include "..\GUI\Output.h"
 #include <fstream>
 
-
 enum STAT_TYPE {
 	
 	START,
@@ -46,7 +45,7 @@ public:
 	STAT_TYPE getType() const;
 
 	virtual int GetID() const;
-	virtual void Draw(Output* pOut) const = 0 ;	//Draw the statement
+	virtual void Draw(Output* pOut) const = 0 ;	//Draw the statement // Retaj
 	
 
 	virtual Point GetInlet() const;
@@ -54,18 +53,14 @@ public:
 	virtual Point GetFalseOutlet() const;
 	virtual string getText() const;
 
-	virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file
+	virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file // Omar
 
 	//virtual void Load(ifstream &Infile) = 0;	//Load the Statement parameters from a file
 
-	//virtual void Edit() = 0;		//Edit the Statement parameter
-
-	//virtual void Simulate();	//Execute the statement in the simulation mode
+	//virtual void Execute();	//Execute the statement in the simulation mode
 
 	//[BONUS] virtual void GenerateCode(ofstream &OutFile) = 0;	//write the statement code to a file
-
-
-	virtual bool ClickOnStatement(Point click) const = 0;
+	virtual bool ClickOnStatement(Point click) const = 0; // Retaj
 
 };
 
