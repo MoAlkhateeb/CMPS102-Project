@@ -24,6 +24,11 @@ public:
 	void setRHS2(const string& RH2);
 	void setOperator(const string& operation);
 
+	string getLHS() const;
+	string getRHS1() const;
+	string getRHS2() const;
+	string getOP() const;
+
 	virtual void Draw(Output* pOut) const override;
 
 	bool ClickOnStatement(Point click) const override;

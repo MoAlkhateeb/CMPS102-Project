@@ -34,6 +34,20 @@ void OperatorAssign::setRHS2(const string& R2) {
 	RHS2 = R2;
 	UpdateStatementText();
 }
+
+string OperatorAssign::getLHS() const {
+	return LHS;
+}
+string OperatorAssign::getRHS1() const {
+	return RHS1;
+}
+string OperatorAssign::getRHS2() const {
+	return RHS2;
+}
+string OperatorAssign::getOP() const {
+	return OP;
+}
+
 void OperatorAssign::setOperator(const string& Operator) {
 	OP = Operator;
 	UpdateStatementText();

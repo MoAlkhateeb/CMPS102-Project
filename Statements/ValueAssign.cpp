@@ -36,6 +36,16 @@ void ValueAssign::setRHS(double R)
 }
 
 
+string ValueAssign::getLHS() const {
+	return LHS;
+}
+
+
+double ValueAssign::getRHS() const {
+	return RHS;
+}
+
+
 void ValueAssign::Draw(Output* pOut) const
 {
 	//Call Output::DrawAssign function to draw assignment statement 	

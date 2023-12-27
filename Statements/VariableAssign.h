@@ -19,6 +19,8 @@ public:
 
 	void setLHS(const string& leftVar);
 	void setRHS(const string& rightvar);
+	string getLHS() const;
+	string getRHS() const;
 
 	virtual void Draw(Output* pOut) const;
 

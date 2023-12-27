@@ -22,7 +22,9 @@ public:
 	
 	void setLHS(const string &L);
 	void setRHS(double R);
-
+	string getLHS() const;
+	double getRHS() const;
+	
 	virtual void Draw(Output* pOut) const override;
 	bool ClickOnStatement(Point click) const override;
 

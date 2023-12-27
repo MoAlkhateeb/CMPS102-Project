@@ -35,6 +35,15 @@ void VariableAssign::setRHS(const string& rightVar) {
 	UpdateStatementText();
 }
 
+string VariableAssign::getLHS() const {
+	return LHS;
+}
+
+
+string VariableAssign::getRHS() const {
+	return RHS;
+}
+
 
 void VariableAssign::Draw(Output* pOut) const
 {

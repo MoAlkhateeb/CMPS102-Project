@@ -31,3 +31,7 @@ Point Statement::GetFalseOutlet() const {
 STAT_TYPE Statement::getType() const {
 	return Type;
 }
+
+string Statement::getText() const {
+	return Text;
+}

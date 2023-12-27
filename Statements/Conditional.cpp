@@ -7,6 +7,15 @@ void Conditional::UpdateStatementText() {
 	Text = T.str();
 }
 
+string Conditional::getLHS() const {
+	return LHS;
+}
+string Conditional::getOperator() const {
+	return OP;
+}
+string Conditional::getRHS() const {
+	return RHS;
+}
 
 Conditional::Conditional(Point Lcorner, string LeftHS, string Operator, string RightHS): Statement() {
 	Type = COND;

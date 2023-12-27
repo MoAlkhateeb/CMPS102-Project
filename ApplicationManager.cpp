@@ -18,7 +18,16 @@
 #include "Actions\Validate.h"
 #include "GUI\Input.h"
 #include "GUI\Output.h"
+#include "Statements\ValueAssign.h"
+#include "Statements\VariableAssign.h"
+#include "Statements\OperatorAssign.h"
+#include "Statements\Read.h"
+#include "Statements\Write.h"
+#include "Statements\End.h"
+#include "Statements\Start.h"
+#include "Statements\Conditional.h"
 #include <set>
+#include <sstream>
 
 using namespace std;
 
@@ -183,6 +192,7 @@ Statement* ApplicationManager::GetStatement(int ID) const {
 			return StatList[i];
 		}
 	}
+	return nullptr;
 }
 
 void ApplicationManager::AddConnector(Connector* pConn) {
@@ -335,25 +345,41 @@ bool ApplicationManager::ValidateAll() const {
 	int countEnd = 0;
 	int countStart = 0;
 
-	for (int i = 0; i < StatCount; i++) {
-		Statement* stat = StatList[i];
-		if (stat->GetInlet().IsValid() && !stat->GetOutlet().IsValid())
-			countEnd++;
-		else if (!stat->GetInlet().IsValid() && stat->GetOutlet().IsValid())
-			countStart++;
-	}
-
-	if (countStart != 1 || countEnd != 1) {
-		pOut->PrintMessage("Your flowchart must have one start and one end.");
-		return false;
-	}
-
-
 	Statement* start;
 	Statement* end;
 
+	for (int i = 0; i < StatCount; i++) {
+		Statement* stat = StatList[i];
+		if (stat->getType() == END) { 
+			end = stat;
+			countEnd++; 
+		}
+		else if (stat->getType() == START) {
+			start = stat;
+			countStart++;
+		}
+
+		// separating the logic for more meaningful error messages.
+		if (countEnd > 1) {
+			pOut->PrintMessage("Your flowchart must have exactly one end.");
+			return false;
+		}
+		if (countStart > 1) {
+			pOut->PrintMessage("Your flowchart must have exactly one start.");
+		}
+	}
+
+	// descriptive error messages for missing start or end.
+	if (countStart == 0) {
+		pOut->PrintMessage("Your flowchart doesn't have a start.");
+		return false;
+	}
+	if (countEnd == 0) {
+		pOut->PrintMessage("Your flowchart doesn't have an end.");
+		return false;
+	}
+
 	// check that chart has the correct num of connectors
-	bool InvalidConnectors = false;
 	for (int i = 0; i < StatCount; i++) {
 		Statement* stat = StatList[i];
 		Point In = stat->GetInlet();
@@ -361,40 +387,115 @@ bool ApplicationManager::ValidateAll() const {
 		Point FOut = stat->GetFalseOutlet();
 
 		// conditional
-		if (In.IsValid() && Out.IsValid() && FOut.IsValid()) {
+		if (stat->getType() == COND) {
 			if (GetConnectorCount(Out) != 1 || GetConnectorCount(FOut) != 1 || GetConnectorCount(In) < 1) {
-				InvalidConnectors = true;
-			}
-		}
-
-		// normal statement (but not start or end)
-		else if (In.IsValid() && Out.IsValid()) {
-			if (GetConnectorCount(Out) != 1 || GetConnectorCount(In) < 1) {
-				InvalidConnectors = true;
+				pOut->PrintMessage("A Conditional doesn't have correct number of connectors.");
+				return false;
 			}
 		}
 
 		// end statement
-		else if (In.IsValid()) {
-			end = stat;
+		else if (stat->getType() == END) {
 			if (GetConnectorCount(In) < 1) {
-				InvalidConnectors = true;
+				pOut->PrintMessage("No connector going into end.");
+				return false;
 			}
 		}
 		
 		// start 
-		else if (Out.IsValid()) {
-			start = stat;
+		else if (stat->getType() == START) {
 			if (GetConnectorCount(Out) != 1) {
-				InvalidConnectors = true;
+				pOut->PrintMessage("No connector coming out of start");
+				return false;
 			}
 		}
-
-		if (InvalidConnectors) {
-			pOut->PrintMessage("The chart doesn't have the correct number of connectors");
-			return false;
+		// normal statement (but not start or end)
+		else {
+			if (GetConnectorCount(Out) != 1 || GetConnectorCount(In) < 1) {
+				pOut->PrintMessage("The chart doesn't have the correct number of connectors");
+				return false;
+			}
 		}
 	}
-	
+
+	set<string> variables;
+
+	// check variables are initialized before use
+	Statement* current = GetConnector(start->GetOutlet())->getDstStat();
+
+	// trivial flowchart
+	if (current->getType() == END) return true;
+
+	Statement* otherBranchStat = nullptr;
+	while (true) {
+		if (dynamic_cast<ValueAssign*>(current)) {
+			ValueAssign* valAssign = dynamic_cast<ValueAssign*>(current);
+			variables.insert(valAssign->getLHS());
+		}
+		else if (dynamic_cast<Conditional*>(current)) {
+			Conditional* conditional = dynamic_cast<Conditional*>(current);
+			string LHS = conditional->getLHS();
+			string RHS = conditional->getRHS();
+
+			if (ValueOrVariable(LHS) == VARIABLE_OP && !variables.count(LHS)) {
+				pOut->PrintMessage("Left hand side variable in conditional used before initialization.");
+				return false;
+			}
+			else if (ValueOrVariable(RHS) == VARIABLE_OP && !variables.count(RHS)) {
+				pOut->PrintMessage("Right hand side variable in conditional used before initialization.");
+				return false;
+			}
+		}
+		else if (dynamic_cast<VariableAssign*>(current)) {
+			VariableAssign* varAssign = dynamic_cast<VariableAssign*>(current);
+			string LHS = varAssign->getLHS();
+			string RHS = varAssign->getRHS();
+
+			if (!variables.count(RHS)) {
+				pOut->PrintMessage("Right hand side variable in variable assignment used before initialization.");
+				return false;
+			}
+			variables.insert(LHS);
+		}
+		else if (dynamic_cast<OperatorAssign*>(current)) {
+			OperatorAssign* opAssign = dynamic_cast<OperatorAssign*>(current);
+			string LHS = opAssign->getLHS();
+			string RHS1 = opAssign->getRHS1();
+			string RHS2 = opAssign->getRHS2();
+
+			if (ValueOrVariable(RHS1) == VARIABLE_OP && !variables.count(RHS1)) {
+				pOut->PrintMessage("First Right hand side variable in Operator Assign used before initialization.");
+				return false;
+			}
+			else if (ValueOrVariable(RHS2) == VARIABLE_OP && !variables.count(RHS2)) {
+				pOut->PrintMessage("Second Right hand side variable in Operator Assign used before initialization.");
+				return false;
+			}
+			variables.insert(LHS);
+		}
+		else if (current->getType() == READ) {
+			variables.insert(current->getText());
+		}
+		else if (current->getType() == WRITE) {
+			if (!variables.count(current->getText())) {
+				pOut->PrintMessage("Variable used before initialization in write.");
+				return false;
+			}
+		}
+		if (current->getType() == COND) {
+			otherBranchStat = GetConnector(current->GetFalseOutlet())->getDstStat();
+		}
+		current = GetConnector(current->GetOutlet())->getDstStat();
+		if (current->getType() == END) {
+			if (otherBranchStat) {
+				current = otherBranchStat;
+				otherBranchStat = nullptr;
+			} 
+			else {
+				return true;
+			}
+		}
+	}
+
 	return true;
 }

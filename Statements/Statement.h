@@ -52,6 +52,7 @@ public:
 	virtual Point GetInlet() const;
 	virtual Point GetOutlet() const;
 	virtual Point GetFalseOutlet() const;
+	virtual string getText() const;
 
 	virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file
 
