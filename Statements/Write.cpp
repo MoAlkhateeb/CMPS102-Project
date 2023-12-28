@@ -3,7 +3,7 @@
 Write::Write(Point LCorner, string text) : Statement() {
 
 	Type = WRITE;
-	pOutConn = nullptr;
+
 	Text = text;
 
 	bottomLeft = LCorner;
@@ -53,4 +53,17 @@ Point Write::GetFalseOutlet() const {
 
 void Write::Save(ofstream& OutFile) {
 	OutFile << "WRITE" << " " << ID << " " << bottomLeft.x << " " << bottomLeft.y << " " << Text << " " << endl;
+}
+
+Write* Write::Load(ifstream& InFile) {
+	int ID;
+	Point topLeftCorner;
+	string content;
+
+	InFile >> ID >> topLeftCorner.x >> topLeftCorner.y >> content;
+
+	Write* pWrite = new Write(topLeftCorner, content);
+	pWrite->SetID(ID);
+
+	return pWrite;
 }

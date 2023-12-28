@@ -15,6 +15,6 @@ public:
 	AddConn(ApplicationManager* pAppManager);
 
 	virtual void ReadActionParameters() override;
+	Connector* CreateConnector(Statement* src, Statement* dst, Point start, Point end);
 	virtual void Execute() override;
-
 };

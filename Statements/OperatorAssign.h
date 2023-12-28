@@ -11,8 +11,6 @@ private:
 
 	string OP; // operator (+,-,*,/)
 
-	Connector* pOutConn;
-
 	Point LeftCorner; // Left corner of the statment block
 
 	virtual void UpdateStatementText() override;
@@ -34,5 +32,7 @@ public:
 	bool ClickOnStatement(Point click) const override;
 
 	virtual Point GetFalseOutlet() const override;
+
 	void Save(ofstream& OutFile);
+	static OperatorAssign* Load(ifstream& InFile);
 };

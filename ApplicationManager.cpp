@@ -12,6 +12,7 @@
 #include "Actions\Exit.h"
 #include "Actions\Delete.h"
 #include "Actions\SaveAction.h"
+#include "Actions\Load.h"
 #include "Actions\SwitchSimulation.h"
 #include "Actions\SwitchDesign.h"
 #include "Actions\Validate.h"
@@ -115,6 +116,10 @@ void ApplicationManager::ExecuteAction(ActionType ActType)
 
 		case SAVE:
 			pAct = new SaveAction(this);
+			break;
+
+		case LOAD:
+			pAct = new LoadAction(this);
 			break;
 
 		case DEL:
@@ -381,55 +386,34 @@ bool ApplicationManager::ValidateAll() const {
 		return false;
 	}
 
-	// check that chart has the correct num of connectors
+	// Chart Outgoing Connectors is limited by validation in addConnector
 	for (int i = 0; i < StatCount; i++) {
-		Statement* stat = StatList[i];
-		Point In = stat->GetInlet();
-		Point Out = stat->GetOutlet();
-		Point FOut = stat->GetFalseOutlet();
-
-		// conditional
-		if (stat->getType() == COND) {
-			if (GetConnectorCount(Out) != 1 || GetConnectorCount(FOut) != 1 || GetConnectorCount(In) < 1) {
-				pOut->PrintMessage("A Conditional doesn't have correct number of connectors.");
-				return false;
-			}
+		if (StatList[i]->getType() == COND && (!StatList[i]->GetOutConn() || !StatList[i]->GetFalseOutConn())) {
+			pOut->PrintMessage("A Conditional is missing output connectors.");
+			return false;
 		}
-
-		// end statement
-		else if (stat->getType() == END) {
-			if (GetConnectorCount(In) < 1) {
-				pOut->PrintMessage("No connector going into end.");
-				return false;
-			}
+		else if (StatList[i]->getType() != END && !StatList[i]->GetOutConn()) {
+			pOut->PrintMessage("Your flowchart is missing output connectors.");
+			return false;
 		}
-		
-		// start 
-		else if (stat->getType() == START) {
-			if (GetConnectorCount(Out) != 1) {
-				pOut->PrintMessage("No connector coming out of start");
-				return false;
-			}
-		}
-		// normal statement (but not start or end)
-		else {
-			if (GetConnectorCount(Out) != 1 || GetConnectorCount(In) < 1) {
-				pOut->PrintMessage("The chart doesn't have the correct number of connectors");
-				return false;
-			}
+		if (StatList[i]->getType() != START && GetConnectorCount(StatList[i]->GetInlet()) == 0) {
+			pOut->PrintMessage("Your flowchart is missing input connectors.");
+			return false;
 		}
 	}
 
 	set<string> variables;
+	set <Statement*> seenStatements;
+	int countIter = 0;
+
+	seenStatements.insert(start);
 
 	// check variables are initialized before use
-	Statement* current = GetConnector(start->GetOutlet())->getDstStat();
-
-	// trivial flowchart
-	if (current->getType() == END) return true;
+	Statement* current = start->GetOutConn()->getDstStat();
 
 	Statement* otherBranchStat = nullptr;
 	while (true) {
+		countIter++;
 		if (dynamic_cast<ValueAssign*>(current)) {
 			ValueAssign* valAssign = dynamic_cast<ValueAssign*>(current);
 			variables.insert(valAssign->getLHS());
@@ -484,21 +468,37 @@ bool ApplicationManager::ValidateAll() const {
 				return false;
 			}
 		}
+
+		seenStatements.insert(current);
+
 		if (current->getType() == COND) {
-			otherBranchStat = GetConnector(current->GetFalseOutlet())->getDstStat();
+			otherBranchStat = current->GetFalseOutConn()->getDstStat();
 		}
-		current = GetConnector(current->GetOutlet())->getDstStat();
-		if (current->getType() == END) {
+
+		if (current != end)
+			current = current->GetOutConn()->getDstStat();
+
+		else {
 			if (otherBranchStat) {
 				current = otherBranchStat;
-				otherBranchStat = nullptr;
+				otherBranchStat = end;
 			} 
 			else {
+				if (seenStatements.size() != StatCount) {
+					pOut->PrintMessage("Your Flowchart is disconnected.");
+					return false;
+				}
 				return true;
 			}
 		}
-	}
 
+		if (seenStatements.size() == StatCount) return true;
+		if (countIter > ConnCount) {
+			pOut->PrintMessage("Your Flowchart Appears to have an infinite loop.");
+			return false;
+		}
+
+	}
 	return true;
 }
  
@@ -516,13 +516,12 @@ void ApplicationManager::ExecuteFlowchart() {
 		else if (StatList[i]->getType() == END) {
 			end = StatList[i];
 		}
-		else if (start && end) {
-			break;
-		}
+		
+		if (start && end) break;
 	}
 
 	// traverse and execute
-	Statement* current = GetConnector(start->GetOutlet())->getDstStat();
+	Statement* current = start->GetOutConn()->getDstStat();
 
 	// trivial flowchart
 	if (current->getType() == END) return;
@@ -602,18 +601,96 @@ void ApplicationManager::ExecuteFlowchart() {
 
 		if (current->getType() == COND) {
 			if (TrueOutlet)
-				current = GetConnector(current->GetOutlet())->getDstStat();
+				current = current->GetOutConn()->getDstStat();
 			else 
-				current = GetConnector(current->GetFalseOutlet())->getDstStat();
+				current = current->GetFalseOutConn()->getDstStat();
 
 			TrueOutlet = false;
 		}
 		else {
-			current = GetConnector(current->GetOutlet())->getDstStat();
+			current = current->GetOutConn()->getDstStat();
 		}
 
 		if (current->getType() == END) {
 			return;
 		}
 	}
+}
+
+void ApplicationManager::LoadAll(ifstream& inFile) {
+	for (int i = 0; i < StatCount; i++) {
+		delete StatList[i];
+	}
+	for (int i = 0; i < ConnCount; i++) {
+		delete ConnList[i];
+	}
+	int statementCount = 0;
+	string type;
+
+	inFile >> statementCount;
+
+	Statement* pStat = nullptr;
+
+	for (int i = 0; i < statementCount; i++) {
+		inFile >> type;
+		
+
+		if (type == "START") {
+			pStat = Start::Load(inFile);
+		}
+		else if (type == "END") {
+			pStat = End::Load(inFile);
+		}
+		else if (type == "COND") {
+			pStat = Conditional::Load(inFile);
+		}
+		else if (type == "VAL_ASSIGN") {
+			pStat = ValueAssign::Load(inFile);
+		}
+		else if (type == "VAR_ASSIGN") {
+			pStat = VariableAssign::Load(inFile);
+		}
+		else if (type == "OP_ASSIGN") {
+			pStat = OperatorAssign::Load(inFile);
+		}
+		else if (type == "READ") {
+			pStat = Read::Load(inFile);
+		}
+		else if (type == "WRITE") {
+			pStat = Write::Load(inFile);
+		}
+
+		AddStatement(pStat);
+	}
+
+	
+	AddConn* AddConnAction = new AddConn(this);
+
+	int connectorCount = 0;
+	Connector* pConn = nullptr;
+	inFile >> connectorCount;
+
+	int srcID, dstID, branch;
+	Point start, end;
+	Statement* Src = nullptr;
+	Statement* Dst = nullptr;
+
+	for (int i = 0; i < connectorCount; i++) {
+		inFile >> srcID >> dstID >> branch;
+		Src = GetStatement(srcID);
+		Dst = GetStatement(dstID);
+
+		end = Dst->GetInlet();
+
+		if (branch == 2) {
+			start = Src->GetFalseOutlet();
+		}
+		else {
+			start = Src->GetOutlet();
+		}
+
+		Connector* pConn = AddConnAction->CreateConnector(Src, Dst, start, end);
+		AddConnector(pConn);
+	}
+	UpdateInterface();
 }

@@ -6,7 +6,9 @@ Statement::Statement()
 { 
 	ID = CreatedStatements++;
 	Text = "";
-	Selected = false;		
+	Selected = false;
+	OutConn = nullptr;
+	FalseOutConn = nullptr;
 }
 
 void Statement::SetSelected(bool s)
@@ -18,6 +20,9 @@ bool Statement::IsSelected() const
 int Statement::GetID() const {
 	return ID;
 }
+void Statement::SetID(int id) {
+	ID = id;
+}
 Point Statement::GetInlet() const {
 	return Inlet;
 }
@@ -26,6 +31,20 @@ Point Statement::GetOutlet() const {
 }
 Point Statement::GetFalseOutlet() const {
 	return FalseOutlet;
+}
+
+
+Connector* Statement::GetOutConn() const {
+	return OutConn;
+}
+Connector* Statement::GetFalseOutConn() const {
+	return FalseOutConn;
+}
+void Statement::setOutConn(Connector* Out) {
+	OutConn = Out;
+}
+void Statement::setFalseOutConn(Connector* FalseOut) {
+	FalseOutConn = FalseOut;
 }
 
 STAT_TYPE Statement::getType() const {

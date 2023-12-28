@@ -27,6 +27,7 @@ void Delete::Execute() {
 	if (TargetConnector) {
 		pManager->SetSelectedConnector(nullptr);
 		pManager->RemoveConnector(TargetConnector);
+	
 		delete TargetConnector;
 	}
 	if (TargetStatement) {

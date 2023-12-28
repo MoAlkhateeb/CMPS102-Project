@@ -4,8 +4,7 @@
 
 class End : public Statement {
 private:
-	Point LeftCorner;	//left corenr of the statement block.
-	Connector* pInConn;
+	Point LeftCorner;	//left corner of the statement block.
 
 protected:
 	virtual void UpdateStatementText() override;
@@ -18,4 +17,5 @@ public:
 	virtual Point GetOutlet() const override;
 	virtual Point GetFalseOutlet() const override;
 	virtual void Save(ofstream& OutFile) override;
+	static End* Load(ifstream& InFile);
 };

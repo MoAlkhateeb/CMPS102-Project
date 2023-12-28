@@ -3,7 +3,7 @@
 
 using namespace std;
 
-VariableAssign::VariableAssign(Point Lcorner, string LeftVar, string RightVar)
+VariableAssign::VariableAssign(Point Lcorner, string LeftVar, string RightVar) : Statement()
 {
 
 	Type = VAR_ASSIGN;
@@ -13,8 +13,6 @@ VariableAssign::VariableAssign(Point Lcorner, string LeftVar, string RightVar)
 	UpdateStatementText();
 
 	LeftCorner = Lcorner;
-
-	pOutConn = nullptr;
 
 	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
 	Inlet.y = LeftCorner.y;
@@ -74,4 +72,16 @@ Point VariableAssign::GetFalseOutlet() const {
 
 void VariableAssign::Save(ofstream& OutFile) {
 	OutFile << "VAR_ASSIGN" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS << endl;
+}
+
+VariableAssign* VariableAssign::Load(ifstream& InFile) {
+	int ID;
+	Point topLeftCorner;
+	string LHS, RHS;
+
+	InFile >> ID >> topLeftCorner.x >> topLeftCorner.y >> LHS >> RHS;
+
+	VariableAssign* pAssign = new VariableAssign(topLeftCorner, LHS, RHS);
+
+	return pAssign;
 }

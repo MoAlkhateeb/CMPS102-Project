@@ -3,8 +3,6 @@
 
 class Write : public Statement {
 	private:
-		Connector* pOutConn;
-
 		Point bottomLeft;
 		Point bottomRight;
 		Point topLeft;
@@ -19,4 +17,5 @@ class Write : public Statement {
 		virtual void Draw(Output* pOut) const override;
 		bool ClickOnStatement(Point click) const override;
 		virtual void Save(ofstream& OutFile) override;
+		static Write* Load(ifstream& InFile);
 };

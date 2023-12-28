@@ -70,6 +70,7 @@ public:
 	
 	// == Save Function ==
 	void SaveAll(const string& filename) const; // Omar
+	void LoadAll(ifstream& inFile); // omar
 	bool ApplicationManager::ValidateAll() const; // Zeena
 	void ApplicationManager::ExecuteFlowchart(); // MoAlkhateeb
 };

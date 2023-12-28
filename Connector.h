@@ -40,6 +40,8 @@ public:
 	bool ClickOnConnector(Point Click) const;
 
 	void Save(ofstream& outFile) const;
+
+	~Connector();
 };
 
 #endif

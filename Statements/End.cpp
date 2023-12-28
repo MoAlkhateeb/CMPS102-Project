@@ -4,7 +4,6 @@ void End::UpdateStatementText() {}
 
 End::End(Point Left) : Statement() {
 	Type = END;
-	pInConn = nullptr;
 	LeftCorner = Left;
 	Inlet.x = LeftCorner.x + UI.END_WDTH / 2;
 	Inlet.y = LeftCorner.y;
@@ -40,4 +39,14 @@ Point End::GetFalseOutlet() const {
 
 void End::Save(ofstream& OutFile) {
 	OutFile << "END" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y  << endl;
+}
+
+End* End::Load(ifstream& InFile) {
+	int ID;
+	Point left;
+
+	InFile >> ID >> left.x >> left.y;
+
+	End* EndPtr = new End(left);
+	return EndPtr;
 }

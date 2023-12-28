@@ -2,7 +2,6 @@
 
 Read::Read(Point LCorner, string text): Statement() {
 	Type = READ;
-	pOutConn = nullptr;
 	Text = text;
 
 	bottomLeft = LCorner;
@@ -52,4 +51,14 @@ Point Read::GetFalseOutlet() const {
 
 void Read::Save(ofstream& OutFile) {
 	OutFile << "READ" << " " << ID << " " << bottomLeft.x << " " << bottomLeft.y << " " << Text << endl;
+}
+
+Read* Read::Load(ifstream& InFile) {
+	int ID, x, y;
+	string Var;
+
+	InFile >> ID >> x >> y >> Var;
+	Read* ReadPtr = new Read(Point(x, y), Var);
+
+	return ReadPtr;
 }

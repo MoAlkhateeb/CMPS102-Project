@@ -19,7 +19,6 @@ string Conditional::getRHS() const {
 
 Conditional::Conditional(Point Lcorner, string LeftHS, string Operator, string RightHS): Statement() {
 	Type = COND;
-	pOutConn = nullptr;
 
 	LHS = LeftHS;
 	RHS = RightHS;
@@ -92,4 +91,17 @@ bool Conditional::ClickOnStatement(Point click) const {
 
 void Conditional::Save(ofstream& OutFile) {
 	OutFile << "COND" << " " << ID << " " << Outlet.x << " " << Outlet.y  << " " << LHS << " " << OP << " " << RHS << endl;
+}
+
+Conditional* Conditional::Load(ifstream& InFile) {
+	int ID;
+	Point topLeftCorner;
+	string LHS, OP, RHS;
+
+	InFile >> ID >> topLeftCorner.x >> topLeftCorner.y >> LHS >> OP >> RHS;
+
+	Conditional* ConnPtr = new Conditional(topLeftCorner, LHS, OP, RHS);
+
+
+	return  ConnPtr;
 }

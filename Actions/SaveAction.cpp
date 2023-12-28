@@ -2,7 +2,6 @@
 #include "../ApplicationManager.h"
 #include "../GUI/Input.h"
 #include "../GUI/Output.h"
-#include <iostream>
 
 SaveAction::SaveAction(ApplicationManager* pAppManager):Action(pAppManager){}
 
@@ -16,7 +15,6 @@ void SaveAction::ReadActionParameters() {
 	int length = filename.length();
 
 	string suffix = filename.substr(length - 4, length - 1);
-	cout << suffix << endl;
 	for (int i = 0; i < suffix.length(); i++) {
 		suffix[i] = tolower(suffix[i]);
 	}

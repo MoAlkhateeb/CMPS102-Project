@@ -9,8 +9,6 @@ private:
 	string LHS;
 	string OP;
 	string RHS;
-
-	Connector* pOutConn;
 	
 	//Point Inlet; // top corner
 	//Point TrueOutlet; // left corner
@@ -33,5 +31,5 @@ public:
 	bool ClickOnStatement(Point click) const override;
 
 	virtual void Save(ofstream& OutFile) override;
-
+	static Conditional* Load(ifstream& InFile);
 };

@@ -20,17 +20,29 @@ void AddConn::ReadActionParameters() {
 	if (pManager->GetStatement(current)) {
 		Src = pManager->GetStatement(current);
 		// not a conditional or end statement
-		if (Src->GetOutlet().IsValid() && !Src->GetFalseOutlet().IsValid()) {
+		if (Src->getType() != COND && Src->getType() != END) {
+			if (Src->GetOutConn()) {
+				pOut->PrintMessage("Statement already has an outgoing connector.");
+				return;
+			}
 			Start = Src->GetOutlet();
 		}
 		// a conditional Statement
-		else if (Src->GetOutlet().IsValid() && Src->GetFalseOutlet().IsValid()) {
+		else if (Src->getType() == COND) {
 			pOut->PrintMessage("Choose True Outlet or False Outlet. write T or empty for True.");
 			string choice = pIn->GetString(pOut);
 			if (choice.empty() || tolower(choice[0]) == 't') {
+				if (Src->GetOutConn()) {
+					pOut->PrintMessage("Statement already has an outgoing connector.");
+					return;
+				}
 				Start = Src->GetOutlet();
 			}
 			else {
+				if (Src->GetFalseOutConn()) {
+					pOut->PrintMessage("Statement already has an outgoing connector.");
+					return;
+				}
 				Start = Src->GetFalseOutlet();
 			}
 		}
@@ -58,10 +70,28 @@ void AddConn::Execute() {
 	if (!Src || !Dst) {
 		return;
 	}
-
-	Connector* conn = new Connector(Src, Dst);
-	conn->setStartPoint(Start);
-	conn->setEndPoint(End);
+	Connector * conn = CreateConnector(Src, Dst, Start, End);
 	pManager->AddConnector(conn);
+}
 
+
+Connector* AddConn::CreateConnector(Statement* src, Statement* dst, Point start, Point end) {
+	if (!src || !dst) {
+		return nullptr;
+	}
+	Connector* conn = new Connector(src, dst);
+	conn->setStartPoint(start);
+	conn->setEndPoint(end);
+
+	if (src->getType() != COND) {
+		src->setOutConn(conn);
+	}
+	else if (src->GetOutlet() == start) {
+		src->setOutConn(conn);
+	}
+	else if (src->GetFalseOutlet() == start) {
+		src->setFalseOutConn(conn);
+	}
+
+	return conn;
 }

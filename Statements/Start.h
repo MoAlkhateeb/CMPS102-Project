@@ -5,7 +5,6 @@ class Start : public Statement {
 
 private:
 	Point LeftCorner;	//left corner of the statement block.
-	Connector* pOutConn;
 
 protected:
 	virtual void UpdateStatementText() override;
@@ -18,4 +17,5 @@ public:
 	virtual Point GetInlet() const override;
 	virtual Point GetFalseOutlet() const override;
 	virtual void Save(ofstream& OutFile) override;
+	static Start* Load(ifstream& InFile);
 };

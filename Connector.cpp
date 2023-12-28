@@ -1,5 +1,6 @@
 #include "Connector.h"
 #include "Statements/Statement.h"
+#include "Actions/AddConn.h"
 #include <fstream>
 
 Connector::Connector(Statement* Src, Statement* Dst)	
@@ -124,4 +125,20 @@ void Connector::Save(ofstream& outFile) const {
 
 	outFile << SrcStat->GetID() << " " << DstStat->GetID() << " " << outletBranch << endl;
 	
+}
+
+
+Connector::~Connector() {
+	Statement* Src = getSrcStat();
+	if (Src->getType() != COND) {
+		Src->setOutConn(nullptr);
+	}
+	else {
+		if (Src->GetFalseOutlet() == getStartPoint()) {
+			Src->setFalseOutConn(nullptr);
+		}
+		else {
+			Src->setOutConn(nullptr);
+		}
+	}
 }

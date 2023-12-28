@@ -13,8 +13,6 @@ ValueAssign::ValueAssign(Point Lcorner, string LeftHS, double RightHS) : Stateme
 	UpdateStatementText();
 
 	LeftCorner = Lcorner;
-	
-	pOutConn = NULL;	//No connectors yet
 
 	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH /2;
 	Inlet.y = LeftCorner.y;
@@ -76,4 +74,16 @@ Point ValueAssign::GetFalseOutlet() const {
 
 void ValueAssign::Save(ofstream& OutFile) {
 	OutFile << "VAL_ASSIGN" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS << endl;
+}
+
+ValueAssign* ValueAssign::Load(ifstream& InFile) {
+	int ID;
+	Point topLeftCorner;
+	string LHS;
+	double RHS;
+
+	InFile >> ID >> topLeftCorner.x >> topLeftCorner.y >> LHS >> RHS;
+	ValueAssign* pAssign = new ValueAssign(topLeftCorner, LHS, RHS);
+
+	return pAssign;
 }

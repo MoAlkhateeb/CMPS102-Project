@@ -35,6 +35,9 @@ protected:
 	Point Outlet;
 	Point FalseOutlet;
 
+	Connector* OutConn;
+	Connector* FalseOutConn;
+
 	virtual void UpdateStatementText() = 0;	//is called when any part of the stat. is edited	
 
 
@@ -45,21 +48,21 @@ public:
 	STAT_TYPE getType() const;
 
 	virtual int GetID() const;
+	void SetID(int id);
 	virtual void Draw(Output* pOut) const = 0 ;	//Draw the statement // Retaj
-	
 
 	virtual Point GetInlet() const;
 	virtual Point GetOutlet() const;
 	virtual Point GetFalseOutlet() const;
+
 	virtual string getText() const;
+	
+	virtual Connector* GetOutConn() const;
+	virtual Connector* GetFalseOutConn() const;
+	virtual void setOutConn(Connector* Out);
+	virtual void setFalseOutConn(Connector* FalseOut);
 
 	virtual void Save(ofstream &OutFile) = 0;	//Save the Statement parameters to a file // Omar
-
-	//virtual void Load(ifstream &Infile) = 0;	//Load the Statement parameters from a file
-
-	//virtual void Execute();	//Execute the statement in the simulation mode
-
-	//[BONUS] virtual void GenerateCode(ofstream &OutFile) = 0;	//write the statement code to a file
 	virtual bool ClickOnStatement(Point click) const = 0; // Retaj
 
 };

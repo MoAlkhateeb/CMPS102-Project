@@ -10,8 +10,6 @@ class ValueAssign : public Statement
 private:
 	string LHS;	//Left Handside of the assignment (name of a variable)
 	double RHS;	//Right Handside (Value)
-	
-	Connector* pOutConn;
 
 	Point LeftCorner;
 
@@ -30,6 +28,7 @@ public:
 
 	virtual Point GetFalseOutlet() const override;
 	virtual void Save(ofstream& OutFile) override;
+	static ValueAssign* Load(ifstream& InFile);
 };
 
 #endif

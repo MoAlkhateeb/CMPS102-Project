@@ -4,7 +4,6 @@ void Start::UpdateStatementText() {}
 
 Start::Start(Point Left) : Statement() {
 	Type = START;
-	pOutConn = nullptr;
 	LeftCorner = Left;
 	Outlet.x = LeftCorner.x + UI.START_WDTH / 2;
 	Outlet.y = LeftCorner.y + UI.START_HI;
@@ -38,4 +37,14 @@ Point Start::GetFalseOutlet() const {
 
 void Start::Save(ofstream& OutFile) {
 	OutFile << "START" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y << endl;
+}
+
+Start* Start::Load(ifstream& InFile) {
+	int ID;
+	Point topLeftCorner;
+
+	InFile >> ID >> topLeftCorner.x >> topLeftCorner.y;
+	Start* StartPtr = new Start(topLeftCorner);
+
+	return StartPtr;
 }

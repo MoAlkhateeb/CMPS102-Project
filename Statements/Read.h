@@ -5,8 +5,6 @@
 class Read : public Statement {
 
 private:
-	Connector* pOutConn;
-
 	Point bottomLeft;
 	Point bottomRight;
 	Point topLeft;
@@ -22,4 +20,5 @@ public:
 
 	virtual Point GetFalseOutlet() const override;
 	virtual void Save(ofstream& OutFile) override;
+	static Read* Load(ifstream& InFile);
 };

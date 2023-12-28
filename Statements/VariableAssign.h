@@ -8,8 +8,6 @@ private:
 	string LHS;	//Left Handside of the assignment (name of a variable)
 	string RHS;	//Right Handside of the assignment (name of a variable)
 
-	Connector* pOutConn;
-
 	Point LeftCorner;	//left corner of the statement block.
 
 	virtual void UpdateStatementText() override;
@@ -28,4 +26,5 @@ public:
 
 	virtual Point GetFalseOutlet() const override;
 	virtual void Save(ofstream& OutFile) override;
+	static VariableAssign* Load(ifstream& InFile);
 };

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-OperatorAssign::OperatorAssign(Point Lcorner, const string& LeftHs, const string& RightHs1, const string& RightHs2, const string& Operator) {
+OperatorAssign::OperatorAssign(Point Lcorner, const string& LeftHs, const string& RightHs1, const string& RightHs2, const string& Operator) : Statement() {
 
 	Type = OP_ASSIGN;
 	LHS = LeftHs;
@@ -14,7 +14,6 @@ OperatorAssign::OperatorAssign(Point Lcorner, const string& LeftHs, const string
 	UpdateStatementText();
 
 	LeftCorner = Lcorner;
-	pOutConn = nullptr; // No connectors yet
 
 	Inlet.x = LeftCorner.x + UI.ASSGN_WDTH / 2;
 	Inlet.y = LeftCorner.y;
@@ -77,5 +76,39 @@ Point OperatorAssign::GetFalseOutlet() const {
 }
 
 void OperatorAssign::Save(ofstream& OutFile) {
-	OutFile << "OPER_ASSIGN" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS1 << " " << OP << " " << RHS2 << endl;
+	if (OP == "+") {
+		OP = "ADD";
+	}
+	else if (OP == "*") {
+		OP = "MUL";
+	}
+	else if (OP == "/") {
+		OP = "DIV";
+	}
+	else if (OP == "-") {
+		OP = "SUB";
+	}
+	OutFile << "OP_ASSIGN" << " " << ID << " " << LeftCorner.x << " " << LeftCorner.y << " " << LHS << " " << RHS1 << " " << OP << " " << RHS2 << endl;
+}
+
+OperatorAssign* OperatorAssign::Load(ifstream& InFile) {
+	int ID, x, y;
+	string LHS, RHS1, RHS2, OP;
+
+	InFile >> ID >> x >> y >> LHS >> RHS1 >> OP >> RHS2;
+	if (OP == "ADD") {
+		OP = "+";
+	}
+	else if (OP == "MUL") {
+		OP = "*";
+	}
+	else if (OP == "DIV") {
+		OP = "/";
+	}
+	else if (OP == "SUB") {
+		OP = "-";
+	}
+	OperatorAssign* OpAssignPtr = new OperatorAssign(Point(x, y), LHS, RHS1, RHS2, OP);
+
+	return OpAssignPtr;
 }
