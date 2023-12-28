@@ -367,6 +367,7 @@ bool ApplicationManager::ValidateAll() const {
 		}
 		if (countStart > 1) {
 			pOut->PrintMessage("Your flowchart must have exactly one start.");
+			return false;
 		}
 	}
 
