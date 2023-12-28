@@ -48,8 +48,11 @@ void Connector::Draw(Output* pOut) const
 	}
 	else {
 		const int dy = 20;
-		Point aboveStart(Start.x, End.y - dy);
-		pOut->DrawConnector(Start, aboveStart, Selected);
+		const int dx = 50;
+		Point nextToStart(Start.x - dx, Start.y);
+		pOut->DrawConnector(Start, nextToStart);
+		Point aboveStart(nextToStart.x, End.y - dy);
+		pOut->DrawConnector(nextToStart, aboveStart, Selected);
 		Point aboveEnd(End.x, End.y - dy);
 		pOut->DrawConnector(aboveStart, aboveEnd, Selected);
 		pOut->DrawConnector(aboveEnd, End, Selected);
